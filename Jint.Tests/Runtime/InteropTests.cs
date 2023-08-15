@@ -467,6 +467,7 @@ namespace Jint.Tests.Runtime
         [Fact]
         public void CanUseIndexOnCollection()
         {
+            // TODO: It is a IList<>, So it is just use index on IList<>
             var collection = new System.Collections.ObjectModel.Collection<string>();
             collection.Add("Mickey Mouse");
             collection.Add("Goofy");
@@ -495,6 +496,18 @@ namespace Jint.Tests.Runtime
             Assert.Equal("Donald Duck", _engine.Evaluate("list[1]").AsString());
             Assert.Equal("Mickey Mouse", list[0]);
             Assert.Equal("Donald Duck", list[1]);
+        }
+
+        [Fact]
+        public void CanUseIndexOnGenericList()
+        {
+            var list = new List<int>() { 3, 4 };
+            _engine.SetValue("list", list);
+            _engine.Evaluate("list[1] = 42;");
+
+            Assert.Equal(42, _engine.Evaluate("list[1]"));
+            Assert.Equal(3, list[0]);
+            Assert.Equal(42, list[1]);
         }
 
         [Fact]

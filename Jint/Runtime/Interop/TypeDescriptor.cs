@@ -43,7 +43,7 @@ namespace Jint.Runtime.Interop
             if (IsArrayLike)
             {
                 LengthProperty = type.GetProperty("Count") ?? type.GetProperty("Length");
-                IsIntegerIndexedArray = typeof(IList).IsAssignableFrom(type);
+                IsIntegerIndexedArray = GetListInterface(type) is not null;
             }
         }
 
@@ -83,6 +83,39 @@ namespace Jint.Runtime.Interop
             }
 
             return false;
+        }
+
+        internal static Type? GetListInterface(Type type)
+        {
+            Type? genericIList = null, genericIReadOnlyList = null;
+            foreach (var interfaceType in type.GetInterfaces())
+            {
+                if (interfaceType.IsGenericType)
+                {
+                    if (interfaceType.GetGenericTypeDefinition() == typeof(IReadOnlyList<>))
+                    {
+                        // TODO `class TestList: IList<int>, IList<string>`
+                        genericIReadOnlyList = interfaceType;
+                    }
+                    else if (interfaceType.GetGenericTypeDefinition() == typeof(IList<>))
+                    {
+                        genericIList = interfaceType;
+                    }
+                }
+            }
+            if (genericIList is not null)
+            {
+                return genericIList;
+            }
+            if (genericIReadOnlyList is not null)
+            {
+                return genericIReadOnlyList;
+            }
+            if (typeof(IList).IsAssignableFrom(type))
+            {
+                return typeof(IList);
+            }
+            return null;
         }
 
         public bool TryGetValue(object target, string member, [NotNullWhen(true)] out object? o)
