@@ -357,7 +357,7 @@ namespace Jint.Runtime.Descriptors
 
             if (desc.IsDataDescriptor())
             {
-                properties["value"] =  new PropertyDescriptor(desc.Value ?? JsValue.Undefined, PropertyFlag.ConfigurableEnumerableWritable);
+                properties["value"] = new PropertyDescriptor(desc.Value ?? JsValue.Undefined, PropertyFlag.ConfigurableEnumerableWritable);
                 if (desc._flags != PropertyFlag.None || desc.WritableSet)
                 {
                     properties["writable"] = new PropertyDescriptor(desc.Writable, PropertyFlag.ConfigurableEnumerableWritable);
@@ -392,9 +392,9 @@ namespace Jint.Runtime.Descriptors
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool IsDataDescriptor()
         {
-            return (_flags & (PropertyFlag.WritableSet | PropertyFlag.Writable)) != 0
-                   || (_flags & PropertyFlag.CustomJsValue) != 0 && !ReferenceEquals(CustomValue, null)
-                   || !ReferenceEquals(_value, null);
+            return !_flags.HasFlag(PropertyFlag.NonData)
+                && (_flags.HasFlag(PropertyFlag.WritableSet) || _flags.HasFlag(PropertyFlag.Writable))
+                && !ReferenceEquals(Value, null);
         }
 
         /// <summary>
@@ -444,7 +444,8 @@ namespace Jint.Runtime.Descriptors
 
         private sealed class UndefinedPropertyDescriptor : PropertyDescriptor
         {
-            public UndefinedPropertyDescriptor() : base(PropertyFlag.None | PropertyFlag.CustomJsValue)
+            public UndefinedPropertyDescriptor()
+                : base(PropertyFlag.None | PropertyFlag.CustomJsValue | PropertyFlag.NonData)
             {
             }
 
