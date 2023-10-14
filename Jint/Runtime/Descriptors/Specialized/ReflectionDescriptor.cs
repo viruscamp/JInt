@@ -16,8 +16,9 @@ namespace Jint.Runtime.Descriptors.Specialized
             ReflectionAccessor reflectionAccessor,
             object target,
             bool enumerable)
-            : base((enumerable ? PropertyFlag.Enumerable : PropertyFlag.None) | PropertyFlag.CustomJsValue | PropertyFlag.NonData)
+            : base((enumerable ? PropertyFlag.Enumerable : PropertyFlag.None) | PropertyFlag.CustomJsValue)
         {
+            _flags |= PropertyFlag.NonData;
             _engine = engine;
             _reflectionAccessor = reflectionAccessor;
             _target = target;

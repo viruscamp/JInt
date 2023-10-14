@@ -17,8 +17,9 @@ namespace Jint.Runtime.Descriptors.Specialized
             DeclarativeEnvironmentRecord env,
             Engine engine,
             string name)
-            : base(value: null, PropertyFlag.Configurable | PropertyFlag.NonData)
+            : base(value: null, PropertyFlag.Configurable)
         {
+            _flags |= PropertyFlag.NonData;
             _env = env;
             _engine = engine;
             _name = new EnvironmentRecord.BindingName(name);

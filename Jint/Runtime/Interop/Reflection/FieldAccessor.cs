@@ -1,4 +1,6 @@
 using System.Reflection;
+using Jint.Native;
+using Jint.Runtime.Descriptors;
 
 namespace Jint.Runtime.Interop.Reflection
 {
@@ -22,6 +24,14 @@ namespace Jint.Runtime.Interop.Reflection
         protected override void DoSetValue(object target, object? value)
         {
             _fieldInfo.SetValue(target, value);
+        }
+
+        public override PropertyDescriptor CreatePropertyDescriptor(Engine engine, object target, bool enumerable = true)
+        {
+            var value = _fieldInfo.GetValue(target);
+            var type = _fieldInfo.FieldType;
+            var jsValue = JsValue.FromObjectWithType(engine, value, type);
+            return new(jsValue, Writable, enumerable, false);
         }
     }
 }

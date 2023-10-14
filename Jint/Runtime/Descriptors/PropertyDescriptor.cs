@@ -21,7 +21,7 @@ namespace Jint.Runtime.Descriptors
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected PropertyDescriptor(PropertyFlag flags)
         {
-            _flags = flags;
+            _flags = flags & ~PropertyFlag.NonData;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -392,9 +392,13 @@ namespace Jint.Runtime.Descriptors
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool IsDataDescriptor()
         {
-            return !_flags.HasFlag(PropertyFlag.NonData)
-                && (_flags.HasFlag(PropertyFlag.WritableSet) || _flags.HasFlag(PropertyFlag.Writable))
-                && !ReferenceEquals(Value, null);
+            if (_flags.HasFlag(PropertyFlag.NonData))
+            {
+                return false;
+            }
+            return (_flags & (PropertyFlag.WritableSet | PropertyFlag.Writable)) != 0
+                || (_flags & PropertyFlag.CustomJsValue) != 0 && !ReferenceEquals(CustomValue, null)
+                || !ReferenceEquals(_value, null);
         }
 
         /// <summary>
@@ -445,7 +449,7 @@ namespace Jint.Runtime.Descriptors
         private sealed class UndefinedPropertyDescriptor : PropertyDescriptor
         {
             public UndefinedPropertyDescriptor()
-                : base(PropertyFlag.None | PropertyFlag.CustomJsValue | PropertyFlag.NonData)
+                : base(PropertyFlag.None | PropertyFlag.CustomJsValue)
             {
             }
 

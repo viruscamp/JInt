@@ -212,24 +212,24 @@ public class PropertyDescriptorTests
     public void ReflectionDescriptorFieldReadOnly()
     {
         var pdField = _engine.Evaluate("Object.getOwnPropertyDescriptor(testClass, 'fieldReadOnly')");
-        CheckPropertyDescriptor(pdField, false, true, false, false, true, false);
+        CheckPropertyDescriptor(pdField, false, true, false, true, false, false);
 
         var pd = _engine.Evaluate("testClass").AsObject().GetOwnProperty("fieldReadOnly");
-        if (checkType) Assert.IsType<ReflectionDescriptor>(pd);
-        Assert.Equal(true, pd.IsAccessorDescriptor());
-        Assert.Equal(false, pd.IsDataDescriptor());
+        //if (checkType) Assert.IsType<PropertyDescriptor>(pd);
+        Assert.Equal(false, pd.IsAccessorDescriptor());
+        Assert.Equal(true, pd.IsDataDescriptor());
     }
 
     [Fact]
     public void ReflectionDescriptorField()
     {
         var pdField = _engine.Evaluate("Object.getOwnPropertyDescriptor(testClass, 'field')");
-        CheckPropertyDescriptor(pdField, false, true, true, false, true, true);
+        CheckPropertyDescriptor(pdField, false, true, true, true, false, false);
 
         var pd = _engine.Evaluate("testClass").AsObject().GetOwnProperty("field");
-        if (checkType) Assert.IsType<ReflectionDescriptor>(pd);
-        Assert.Equal(true, pd.IsAccessorDescriptor());
-        Assert.Equal(false, pd.IsDataDescriptor());
+        //if (checkType) Assert.IsType<PropertyDescriptor>(pd);
+        Assert.Equal(false, pd.IsAccessorDescriptor());
+        Assert.Equal(true, pd.IsDataDescriptor());
     }
 
     [Fact]
@@ -317,9 +317,6 @@ public class PropertyDescriptorTests
     {
         var pd = jsPropertyDescriptor.AsObject();
 
-        _engine.SetValue("pd", pd);
-        var json = _engine.Evaluate("JSON.stringify(pd)");
-
         Assert.Equal(configurable, pd["configurable"].AsBoolean());
         Assert.Equal(enumerable, pd["enumerable"].AsBoolean());
         if (writable)
@@ -334,5 +331,23 @@ public class PropertyDescriptorTests
         Assert.Equal(hasValue, !pd["value"].IsUndefined());
         Assert.Equal(hasGet, !pd["get"].IsUndefined());
         Assert.Equal(hasSet, !pd["set"].IsUndefined());
+    }
+
+    [Fact]
+    public void DefinePropertyFromAccesorToData()
+    {
+        var pd = _engine.Evaluate("""
+            let o = {};
+            Object.defineProperty(o, 'foo', {
+              get() { return 1; },
+              configurable: true
+            });
+            Object.defineProperty(o, 'foo', {
+              value: 101
+            });
+            return Object.getOwnPropertyDescriptor(o, 'foo');
+        """);
+        Assert.Equal(101, pd.AsObject().Get("value").AsInteger());
+        CheckPropertyDescriptor(pd, true, false, false, true, false, false);
     }
 }

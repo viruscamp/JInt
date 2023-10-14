@@ -53,8 +53,9 @@ namespace Jint.Runtime.Descriptors
             private JsValue? _thrower;
 
             public ThrowerPropertyDescriptor(Engine engine, PropertyFlag flags)
-                : base(flags | PropertyFlag.CustomJsValue | PropertyFlag.NonData)
+                : base(flags | PropertyFlag.CustomJsValue)
             {
+                _flags |= PropertyFlag.NonData;
                 _engine = engine;
             }
 
