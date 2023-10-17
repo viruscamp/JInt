@@ -23,8 +23,8 @@ namespace Jint.Native.RegExp
         {
             _prototype = functionPrototype;
             PrototypeObject = new RegExpPrototype(engine, realm, this, objectPrototype);
-            _length = new PropertyDescriptor(2, PropertyFlag.Configurable);
-            _prototypeDescriptor = new PropertyDescriptor(PrototypeObject, PropertyFlag.AllForbidden);
+            _length = new DataPropertyDescriptor(2, PropertyFlag.Configurable);
+            _prototypeDescriptor = new DataPropertyDescriptor(PrototypeObject, PropertyFlag.AllForbidden);
         }
 
         internal RegExpPrototype PrototypeObject { get; }
@@ -151,7 +151,7 @@ namespace Jint.Native.RegExp
 
         private static void RegExpInitialize(JsRegExp r)
         {
-            r.SetOwnProperty(JsRegExp.PropertyLastIndex, new PropertyDescriptor(0, PropertyFlag.OnlyWritable));
+            r.SetOwnProperty(JsRegExp.PropertyLastIndex, new DataPropertyDescriptor(0, PropertyFlag.OnlyWritable));
         }
     }
 }

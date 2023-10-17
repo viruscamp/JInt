@@ -20,8 +20,8 @@ internal sealed class FinalizationRegistryConstructor : Constructor
     {
         PrototypeObject = new FinalizationRegistryPrototype(engine, realm, this, objectPrototype);
         _prototype = functionConstructor.PrototypeObject;
-        _prototypeDescriptor = new PropertyDescriptor(PrototypeObject, PropertyFlag.AllForbidden);
-        _length = new PropertyDescriptor(JsNumber.PositiveOne, PropertyFlag.Configurable);
+        _prototypeDescriptor = new DataPropertyDescriptor(PrototypeObject, PropertyFlag.AllForbidden);
+        _length = new DataPropertyDescriptor(JsNumber.PositiveOne, PropertyFlag.Configurable);
     }
 
     public FinalizationRegistryPrototype PrototypeObject { get; }

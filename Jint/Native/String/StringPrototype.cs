@@ -38,54 +38,54 @@ namespace Jint.Native.String
             const PropertyFlag lengthFlags = PropertyFlag.Configurable;
             const PropertyFlag propertyFlags = lengthFlags | PropertyFlag.Writable;
 
-            var trimStart = new PropertyDescriptor(new ClrFunctionInstance(Engine, "trimStart", TrimStart, 0, lengthFlags), propertyFlags);
-            var trimEnd = new PropertyDescriptor(new ClrFunctionInstance(Engine, "trimEnd", TrimEnd, 0, lengthFlags), propertyFlags);
+            var trimStart = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "trimStart", TrimStart, 0, lengthFlags), propertyFlags);
+            var trimEnd = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "trimEnd", TrimEnd, 0, lengthFlags), propertyFlags);
             var properties = new PropertyDictionary(37, checkExistingKeys: false)
             {
-                ["constructor"] = new PropertyDescriptor(_constructor, PropertyFlag.NonEnumerable),
-                ["toString"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "toString", ToStringString, 0, lengthFlags), propertyFlags),
-                ["valueOf"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "valueOf", ValueOf, 0, lengthFlags), propertyFlags),
-                ["charAt"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "charAt", CharAt, 1, lengthFlags), propertyFlags),
-                ["charCodeAt"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "charCodeAt", CharCodeAt, 1, lengthFlags), propertyFlags),
-                ["codePointAt"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "codePointAt", CodePointAt, 1, lengthFlags), propertyFlags),
-                ["concat"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "concat", Concat, 1, lengthFlags), propertyFlags),
-                ["indexOf"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "indexOf", IndexOf, 1, lengthFlags), propertyFlags),
-                ["endsWith"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "endsWith", EndsWith, 1, lengthFlags), propertyFlags),
-                ["startsWith"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "startsWith", StartsWith, 1, lengthFlags), propertyFlags),
-                ["lastIndexOf"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "lastIndexOf", LastIndexOf, 1, lengthFlags), propertyFlags),
-                ["localeCompare"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "localeCompare", LocaleCompare, 1, lengthFlags), propertyFlags),
-                ["match"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "match", Match, 1, lengthFlags), propertyFlags),
-                ["matchAll"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "matchAll", MatchAll, 1, lengthFlags), propertyFlags),
-                ["replace"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "replace", Replace, 2, lengthFlags), propertyFlags),
-                ["replaceAll"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "replaceAll", ReplaceAll, 2, lengthFlags), propertyFlags),
-                ["search"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "search", Search, 1, lengthFlags), propertyFlags),
-                ["slice"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "slice", Slice, 2, lengthFlags), propertyFlags),
-                ["split"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "split", Split, 2, lengthFlags), propertyFlags),
-                ["substr"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "substr", Substr, 2), propertyFlags),
-                ["substring"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "substring", Substring, 2, lengthFlags), propertyFlags),
-                ["toLowerCase"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "toLowerCase", ToLowerCase, 0, lengthFlags), propertyFlags),
-                ["toLocaleLowerCase"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "toLocaleLowerCase", ToLocaleLowerCase, 0, lengthFlags), propertyFlags),
-                ["toUpperCase"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "toUpperCase", ToUpperCase, 0, lengthFlags), propertyFlags),
-                ["toLocaleUpperCase"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "toLocaleUpperCase", ToLocaleUpperCase, 0, lengthFlags), propertyFlags),
-                ["trim"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "trim", Trim, 0, lengthFlags), propertyFlags),
+                ["constructor"] = new DataPropertyDescriptor(_constructor, PropertyFlag.NonEnumerable),
+                ["toString"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "toString", ToStringString, 0, lengthFlags), propertyFlags),
+                ["valueOf"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "valueOf", ValueOf, 0, lengthFlags), propertyFlags),
+                ["charAt"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "charAt", CharAt, 1, lengthFlags), propertyFlags),
+                ["charCodeAt"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "charCodeAt", CharCodeAt, 1, lengthFlags), propertyFlags),
+                ["codePointAt"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "codePointAt", CodePointAt, 1, lengthFlags), propertyFlags),
+                ["concat"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "concat", Concat, 1, lengthFlags), propertyFlags),
+                ["indexOf"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "indexOf", IndexOf, 1, lengthFlags), propertyFlags),
+                ["endsWith"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "endsWith", EndsWith, 1, lengthFlags), propertyFlags),
+                ["startsWith"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "startsWith", StartsWith, 1, lengthFlags), propertyFlags),
+                ["lastIndexOf"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "lastIndexOf", LastIndexOf, 1, lengthFlags), propertyFlags),
+                ["localeCompare"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "localeCompare", LocaleCompare, 1, lengthFlags), propertyFlags),
+                ["match"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "match", Match, 1, lengthFlags), propertyFlags),
+                ["matchAll"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "matchAll", MatchAll, 1, lengthFlags), propertyFlags),
+                ["replace"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "replace", Replace, 2, lengthFlags), propertyFlags),
+                ["replaceAll"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "replaceAll", ReplaceAll, 2, lengthFlags), propertyFlags),
+                ["search"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "search", Search, 1, lengthFlags), propertyFlags),
+                ["slice"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "slice", Slice, 2, lengthFlags), propertyFlags),
+                ["split"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "split", Split, 2, lengthFlags), propertyFlags),
+                ["substr"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "substr", Substr, 2), propertyFlags),
+                ["substring"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "substring", Substring, 2, lengthFlags), propertyFlags),
+                ["toLowerCase"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "toLowerCase", ToLowerCase, 0, lengthFlags), propertyFlags),
+                ["toLocaleLowerCase"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "toLocaleLowerCase", ToLocaleLowerCase, 0, lengthFlags), propertyFlags),
+                ["toUpperCase"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "toUpperCase", ToUpperCase, 0, lengthFlags), propertyFlags),
+                ["toLocaleUpperCase"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "toLocaleUpperCase", ToLocaleUpperCase, 0, lengthFlags), propertyFlags),
+                ["trim"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "trim", Trim, 0, lengthFlags), propertyFlags),
                 ["trimStart"] = trimStart,
                 ["trimEnd"] = trimEnd,
                 ["trimLeft"] = trimStart,
                 ["trimRight"] = trimEnd,
-                ["padStart"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "padStart", PadStart, 1, lengthFlags), propertyFlags),
-                ["padEnd"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "padEnd", PadEnd, 1, lengthFlags), propertyFlags),
-                ["includes"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "includes", Includes, 1, lengthFlags), propertyFlags),
-                ["normalize"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "normalize", Normalize, 0, lengthFlags), propertyFlags),
-                ["repeat"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "repeat", Repeat, 1, lengthFlags), propertyFlags),
-                ["at"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "at", At, 1, lengthFlags), propertyFlags),
-                ["isWellFormed"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "isWellFormed", IsWellFormed, 0, lengthFlags), propertyFlags),
-                ["toWellFormed"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "toWellFormed", ToWellFormed, 0, lengthFlags), propertyFlags),
+                ["padStart"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "padStart", PadStart, 1, lengthFlags), propertyFlags),
+                ["padEnd"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "padEnd", PadEnd, 1, lengthFlags), propertyFlags),
+                ["includes"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "includes", Includes, 1, lengthFlags), propertyFlags),
+                ["normalize"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "normalize", Normalize, 0, lengthFlags), propertyFlags),
+                ["repeat"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "repeat", Repeat, 1, lengthFlags), propertyFlags),
+                ["at"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "at", At, 1, lengthFlags), propertyFlags),
+                ["isWellFormed"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "isWellFormed", IsWellFormed, 0, lengthFlags), propertyFlags),
+                ["toWellFormed"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "toWellFormed", ToWellFormed, 0, lengthFlags), propertyFlags),
             };
             SetProperties(properties);
 
             var symbols = new SymbolDictionary(1)
             {
-                [GlobalSymbolRegistry.Iterator] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "[Symbol.iterator]", Iterator, 0, lengthFlags), propertyFlags)
+                [GlobalSymbolRegistry.Iterator] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "[Symbol.iterator]", Iterator, 0, lengthFlags), propertyFlags)
             };
             SetSymbols(symbols);
         }

@@ -25,8 +25,8 @@ internal sealed class DateConstructor : Constructor
     {
         _prototype = functionPrototype;
         PrototypeObject = new DatePrototype(engine, this, objectPrototype);
-        _length = new PropertyDescriptor(7, PropertyFlag.Configurable);
-        _prototypeDescriptor = new PropertyDescriptor(PrototypeObject, PropertyFlag.AllForbidden);
+        _length = new DataPropertyDescriptor(7, PropertyFlag.Configurable);
+        _prototypeDescriptor = new DataPropertyDescriptor(PrototypeObject, PropertyFlag.AllForbidden);
         _timeSystem = engine.Options.TimeSystem;
     }
 
@@ -39,9 +39,9 @@ internal sealed class DateConstructor : Constructor
 
         var properties = new PropertyDictionary(3, checkExistingKeys: false)
         {
-            ["parse"] = new(new ClrFunctionInstance(Engine, "parse", Parse, 1, LengthFlags), PropertyFlags),
-            ["UTC"] = new(new ClrFunctionInstance(Engine, "UTC", Utc, 7, LengthFlags), PropertyFlags),
-            ["now"] = new(new ClrFunctionInstance(Engine, "now", Now, 0, LengthFlags), PropertyFlags)
+            ["parse"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "parse", Parse, 1, LengthFlags), PropertyFlags),
+            ["UTC"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "UTC", Utc, 7, LengthFlags), PropertyFlags),
+            ["now"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "now", Now, 0, LengthFlags), PropertyFlags)
         };
         SetProperties(properties);
     }
@@ -86,7 +86,7 @@ internal sealed class DateConstructor : Constructor
         var yInteger = TypeConverter.ToInteger(y);
         if (!double.IsNaN(y) && 0 <= yInteger && yInteger <= 99)
         {
-            y  = yInteger + 1900;
+            y = yInteger + 1900;
         }
 
         var finalDate = DatePrototype.MakeDate(

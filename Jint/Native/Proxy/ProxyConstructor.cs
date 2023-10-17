@@ -20,14 +20,14 @@ namespace Jint.Native.Proxy
             Realm realm)
             : base(engine, realm, _name)
         {
-            _length = new PropertyDescriptor(2, PropertyFlag.Configurable);
+            _length = new DataPropertyDescriptor(2, PropertyFlag.Configurable);
         }
 
         protected override void Initialize()
         {
             var properties = new PropertyDictionary(1, checkExistingKeys: false)
             {
-                ["revocable"] = new PropertyDescriptor(new ClrFunctionInstance(_engine, "revocable", Revocable, 2, PropertyFlag.Configurable), true, true, true)
+                ["revocable"] = new DataPropertyDescriptor(new ClrFunctionInstance(_engine, "revocable", Revocable, 2, PropertyFlag.Configurable), true, true, true)
             };
             SetProperties(properties);
         }
@@ -70,8 +70,8 @@ namespace Jint.Native.Proxy
             }
 
             var result = _realm.Intrinsics.Object.Construct(System.Array.Empty<JsValue>());
-            result.DefineOwnProperty(PropertyRevoke, new PropertyDescriptor(new ClrFunctionInstance(_engine, name: "", Revoke, 0, PropertyFlag.Configurable), PropertyFlag.ConfigurableEnumerableWritable));
-            result.DefineOwnProperty(PropertyProxy, new PropertyDescriptor(p, PropertyFlag.ConfigurableEnumerableWritable));
+            result.DefineOwnProperty(PropertyRevoke, new DataPropertyDescriptor(new ClrFunctionInstance(_engine, name: "", Revoke, 0, PropertyFlag.Configurable), PropertyFlag.ConfigurableEnumerableWritable));
+            result.DefineOwnProperty(PropertyProxy, new DataPropertyDescriptor(p, PropertyFlag.ConfigurableEnumerableWritable));
             return result;
         }
 

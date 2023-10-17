@@ -26,7 +26,7 @@ namespace Jint.Runtime.Interop
 
             _length = lengthFlags == PropertyFlag.AllForbidden
                 ? PropertyDescriptor.AllForbiddenDescriptor.ForNumber(length)
-                : new PropertyDescriptor(JsNumber.Create(length), lengthFlags);
+                : new DataPropertyDescriptor(JsNumber.Create(length), lengthFlags);
         }
 
         protected internal override JsValue Call(JsValue thisObject, JsValue[] arguments)

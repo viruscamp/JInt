@@ -26,7 +26,7 @@ namespace Jint.Runtime.Interop
             _length = PropertyDescriptor.AllForbiddenDescriptor.NumberZero;
 
             var proto = new TypeReferencePrototype(engine, this);
-            _prototypeDescriptor = new PropertyDescriptor(proto, PropertyFlag.AllForbidden);
+            _prototypeDescriptor = new DataPropertyDescriptor(proto, PropertyFlag.AllForbidden);
 
             PreventExtensions();
         }
@@ -257,7 +257,7 @@ namespace Jint.Runtime.Interop
                         1,
                         PropertyFlag.Configurable);
 
-                    var hasInstanceProperty = new PropertyDescriptor(hasInstanceFunction, PropertyFlag.AllForbidden);
+                    var hasInstanceProperty = new DataPropertyDescriptor(hasInstanceFunction, PropertyFlag.AllForbidden);
                     SetProperty(GlobalSymbolRegistry.HasInstance, hasInstanceProperty);
                     return hasInstanceProperty;
                 }

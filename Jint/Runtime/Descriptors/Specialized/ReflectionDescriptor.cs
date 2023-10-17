@@ -5,7 +5,7 @@ using Jint.Runtime.Interop.Reflection;
 
 namespace Jint.Runtime.Descriptors.Specialized
 {
-    internal sealed class ReflectionDescriptor : PropertyDescriptor
+    internal sealed class ReflectionDescriptor : PropertyDescriptor, INonData
     {
         private readonly Engine _engine;
         private readonly ReflectionAccessor _reflectionAccessor;
@@ -16,9 +16,8 @@ namespace Jint.Runtime.Descriptors.Specialized
             ReflectionAccessor reflectionAccessor,
             object target,
             bool enumerable)
-            : base((enumerable ? PropertyFlag.Enumerable : PropertyFlag.None) | PropertyFlag.CustomJsValue)
+            : base((enumerable ? PropertyFlag.Enumerable : PropertyFlag.None))
         {
-            _flags |= PropertyFlag.NonData;
             _engine = engine;
             _reflectionAccessor = reflectionAccessor;
             _target = target;
@@ -36,8 +35,7 @@ namespace Jint.Runtime.Descriptors.Specialized
         public override JsValue? Get { get; }
         public override JsValue? Set { get; }
 
-
-        protected internal override JsValue? CustomValue
+        public override JsValue Value
         {
             get => DoGet(null);
             set => DoSet(null, value);

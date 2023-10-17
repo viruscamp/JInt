@@ -27,16 +27,16 @@ namespace Jint.Native.Promise
             const PropertyFlag propertyFlags = PropertyFlag.Configurable | PropertyFlag.Writable;
             var properties = new PropertyDictionary(5, checkExistingKeys: false)
             {
-                ["constructor"] = new(_constructor, PropertyFlag.NonEnumerable),
-                ["then"] = new(new ClrFunctionInstance(Engine, "then", Then, 2, lengthFlags), propertyFlags),
-                ["catch"] = new(new ClrFunctionInstance(Engine, "catch", Catch, 1, lengthFlags), propertyFlags),
-                ["finally"] = new(new ClrFunctionInstance(Engine, "finally", Finally, 1, lengthFlags), propertyFlags)
+                ["constructor"] = new DataPropertyDescriptor(_constructor, PropertyFlag.NonEnumerable),
+                ["then"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "then", Then, 2, lengthFlags), propertyFlags),
+                ["catch"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "catch", Catch, 1, lengthFlags), propertyFlags),
+                ["finally"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "finally", Finally, 1, lengthFlags), propertyFlags)
             };
             SetProperties(properties);
 
             var symbols = new SymbolDictionary(1)
             {
-                [GlobalSymbolRegistry.ToStringTag] = new(new JsString("Promise"), PropertyFlag.Configurable)
+                [GlobalSymbolRegistry.ToStringTag] = new DataPropertyDescriptor(new JsString("Promise"), PropertyFlag.Configurable)
             };
             SetSymbols(symbols);
         }
@@ -78,7 +78,7 @@ namespace Jint.Native.Promise
         // 1. Let promise be the this value.
         // 2. Return ? Invoke(promise, "then", « undefined, onRejected »).
         private JsValue Catch(JsValue thisValue, JsValue[] arguments) =>
-            _engine.Invoke(thisValue, "then", new[] {Undefined, arguments.At(0)});
+            _engine.Invoke(thisValue, "then", new[] { Undefined, arguments.At(0) });
 
         // https://tc39.es/ecma262/#sec-promise.prototype.finally
         private JsValue Finally(JsValue thisValue, JsValue[] arguments)
@@ -114,7 +114,7 @@ namespace Jint.Native.Promise
             }
 
             // 7. Return ? Invoke(promise, "then", « thenFinally, catchFinally »).
-            return _engine.Invoke(promise, "then", new[] {thenFinally, catchFinally});
+            return _engine.Invoke(promise, "then", new[] { thenFinally, catchFinally });
         }
 
         // https://tc39.es/ecma262/#sec-thenfinallyfunctions
@@ -127,13 +127,13 @@ namespace Jint.Native.Promise
                 var result = onFinally.Call(Undefined, Arguments.Empty);
 
                 // 7. Let promise be ? PromiseResolve(C, result).
-                var promise = _realm.Intrinsics.Promise.Resolve((JsValue) ctor, new[] {result});
+                var promise = _realm.Intrinsics.Promise.Resolve((JsValue) ctor, new[] { result });
 
                 // 8. Let valueThunk be equivalent to a function that returns value.
                 var valueThunk = new ClrFunctionInstance(_engine, "", (_, _) => value);
 
                 // 9. Return ? Invoke(promise, "then", « valueThunk »).
-                return _engine.Invoke(promise, "then", new JsValue[] {valueThunk});
+                return _engine.Invoke(promise, "then", new JsValue[] { valueThunk });
             }, 1, PropertyFlag.Configurable);
 
         // https://tc39.es/ecma262/#sec-catchfinallyfunctions
@@ -146,13 +146,13 @@ namespace Jint.Native.Promise
                 var result = onFinally.Call(Undefined, Arguments.Empty);
 
                 // 7. Let promise be ? PromiseResolve(C, result).
-                var promise = _realm.Intrinsics.Promise.Resolve((JsValue) ctor, new[] {result});
+                var promise = _realm.Intrinsics.Promise.Resolve((JsValue) ctor, new[] { result });
 
                 // 8. Let thrower be equivalent to a function that throws reason.
                 var thrower = new ClrFunctionInstance(_engine, "", (_, _) => throw new JavaScriptException(reason));
 
                 // 9. Return ? Invoke(promise, "then", « thrower »).
-                return _engine.Invoke(promise, "then", new JsValue[] {thrower});
+                return _engine.Invoke(promise, "then", new JsValue[] { thrower });
             }, 1, PropertyFlag.Configurable);
     }
 }

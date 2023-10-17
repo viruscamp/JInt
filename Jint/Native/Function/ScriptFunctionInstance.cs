@@ -50,7 +50,7 @@ namespace Jint.Native.Function
                 && !function.Function.Generator)
             {
                 SetProperty(KnownKeys.Arguments, new GetSetPropertyDescriptor.ThrowerPropertyDescriptor(engine, PropertyFlag.Configurable));
-                SetProperty(KnownKeys.Caller, new PropertyDescriptor(Undefined, PropertyFlag.Configurable));
+                SetProperty(KnownKeys.Caller, new DataPropertyDescriptor(Undefined, PropertyFlag.Configurable));
             }
         }
 

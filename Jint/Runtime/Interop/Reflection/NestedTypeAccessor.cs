@@ -19,6 +19,6 @@ internal sealed class NestedTypeAccessor : ReflectionAccessor
 
     public override PropertyDescriptor CreatePropertyDescriptor(Engine engine, object target, bool enumerable = true)
     {
-        return new(_typeReference, PropertyFlag.AllForbidden);
+        return new DataPropertyDescriptor(_typeReference, PropertyFlag.AllForbidden);
     }
 }

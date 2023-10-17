@@ -40,6 +40,6 @@ public partial class ObjectInstance
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void FastSetDataProperty(string name, JsValue value)
     {
-        SetProperty(name, new PropertyDescriptor(value, PropertyFlag.ConfigurableEnumerableWritable));
+        SetProperty(name, new DataPropertyDescriptor(value, PropertyFlag.ConfigurableEnumerableWritable));
     }
 }

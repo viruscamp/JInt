@@ -71,9 +71,9 @@ public partial class GlobalObject
     private static readonly Key propertyEval = "eval";
     private static readonly Key propertyToString = "toString";
 
-    private static readonly PropertyDescriptor _propertyDescriptorNan = new(JsNumber.DoubleNaN, PropertyFlag.AllForbidden);
-    private static readonly PropertyDescriptor _propertyDescriptorPositiveInfinity = new(JsNumber.DoublePositiveInfinity, PropertyFlag.AllForbidden);
-    private static readonly PropertyDescriptor _propertyDescriptorUndefined = new(Undefined, PropertyFlag.AllForbidden);
+    private static readonly PropertyDescriptor _propertyDescriptorNan = new DataPropertyDescriptor(JsNumber.DoubleNaN, PropertyFlag.AllForbidden);
+    private static readonly PropertyDescriptor _propertyDescriptorPositiveInfinity = new DataPropertyDescriptor(JsNumber.DoublePositiveInfinity, PropertyFlag.AllForbidden);
+    private static readonly PropertyDescriptor _propertyDescriptorUndefined = new DataPropertyDescriptor(Undefined, PropertyFlag.AllForbidden);
 
     protected override void Initialize()
     {
@@ -96,7 +96,7 @@ public partial class GlobalObject
         properties.AddDangerous(propertyFinalizationRegistry, new LazyPropertyDescriptor(this, static state => ((GlobalObject) state!)._realm.Intrinsics.FinalizationRegistry, PropertyFlags));
         properties.AddDangerous(propertyFloat32Array, new LazyPropertyDescriptor(this, static state => ((GlobalObject) state!)._realm.Intrinsics.Float32Array, PropertyFlags));
         properties.AddDangerous(propertyFloat64Array, new LazyPropertyDescriptor(this, static state => ((GlobalObject) state!)._realm.Intrinsics.Float64Array, PropertyFlags));
-        properties.AddDangerous(propertyFunction, new PropertyDescriptor(_realm.Intrinsics.Function, PropertyFlags));
+        properties.AddDangerous(propertyFunction, new DataPropertyDescriptor(_realm.Intrinsics.Function, PropertyFlags));
         properties.AddDangerous(propertyInt16Array, new LazyPropertyDescriptor(this, static state => ((GlobalObject) state!)._realm.Intrinsics.Int16Array, PropertyFlags));
         properties.AddDangerous(propertyInt32Array, new LazyPropertyDescriptor(this, static state => ((GlobalObject) state!)._realm.Intrinsics.Int32Array, PropertyFlags));
         properties.AddDangerous(propertyInt8Array, new LazyPropertyDescriptor(this, static state => ((GlobalObject) state!)._realm.Intrinsics.Int8Array, PropertyFlags));
@@ -105,7 +105,7 @@ public partial class GlobalObject
         properties.AddDangerous(propertyMap, new LazyPropertyDescriptor(this, static state => ((GlobalObject) state!)._realm.Intrinsics.Map, PropertyFlags));
         properties.AddDangerous(propertyMath, new LazyPropertyDescriptor(this, static state => ((GlobalObject) state!)._realm.Intrinsics.Math, PropertyFlags));
         properties.AddDangerous(propertyNumber, new LazyPropertyDescriptor(this, static state => ((GlobalObject) state!)._realm.Intrinsics.Number, PropertyFlags));
-        properties.AddDangerous(propertyObject, new PropertyDescriptor(_realm.Intrinsics.Object, PropertyFlags));
+        properties.AddDangerous(propertyObject, new DataPropertyDescriptor(_realm.Intrinsics.Object, PropertyFlags));
         properties.AddDangerous(propertyPromise, new LazyPropertyDescriptor(this, static state => ((GlobalObject) state!)._realm.Intrinsics.Promise, PropertyFlags));
         properties.AddDangerous(propertyProxy, new LazyPropertyDescriptor(this, static state => ((GlobalObject) state!)._realm.Intrinsics.Proxy, PropertyFlags));
         properties.AddDangerous(propertyRangeError, new LazyPropertyDescriptor(this, static state => ((GlobalObject) state!)._realm.Intrinsics.RangeError, PropertyFlags));
@@ -173,7 +173,7 @@ public partial class GlobalObject
             return new ClrFunctionInstance(global._engine, "unescape", global.Unescape, 1, LengthFlags);
         }, PropertyFlags));
 
-        properties.AddDangerous(propertyGlobalThis, new PropertyDescriptor(this, PropertyFlags));
+        properties.AddDangerous(propertyGlobalThis, new DataPropertyDescriptor(this, PropertyFlags));
         properties.AddDangerous(propertyEval, new LazyPropertyDescriptor(this, static state => ((GlobalObject) state!)._realm.Intrinsics.Eval, PropertyFlag.Configurable | PropertyFlag.Writable));
 
         // toString is not mentioned or actually required in spec, but some tests rely on it

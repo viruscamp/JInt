@@ -20,8 +20,8 @@ internal sealed class SegmenterConstructor : Constructor
     {
         _prototype = functionPrototype;
         PrototypeObject = new SegmenterPrototype(engine, realm, this, objectPrototype);
-        _length = new PropertyDescriptor(JsNumber.PositiveZero, PropertyFlag.Configurable);
-        _prototypeDescriptor = new PropertyDescriptor(PrototypeObject, PropertyFlag.AllForbidden);
+        _length = new DataPropertyDescriptor(JsNumber.PositiveZero, PropertyFlag.Configurable);
+        _prototypeDescriptor = new DataPropertyDescriptor(PrototypeObject, PropertyFlag.AllForbidden);
     }
 
     public SegmenterPrototype PrototypeObject { get; }

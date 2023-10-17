@@ -29,11 +29,14 @@ internal sealed class FinalizationRegistryPrototype : Prototype
         const PropertyFlag PropertyFlags = PropertyFlag.NonEnumerable;
         var properties = new PropertyDictionary(4, checkExistingKeys: false)
         {
-            [KnownKeys.Constructor] = new(_constructor, PropertyFlag.NonEnumerable), ["register"] = new(new ClrFunctionInstance(Engine, "register", Register, 2, PropertyFlag.Configurable), PropertyFlags), ["unregister"] = new(new ClrFunctionInstance(Engine, "unregister", Unregister, 1, PropertyFlag.Configurable), PropertyFlags), ["cleanupSome"] = new(new ClrFunctionInstance(Engine, "cleanupSome", CleanupSome, 0, PropertyFlag.Configurable), PropertyFlags),
+            [KnownKeys.Constructor] = new DataPropertyDescriptor(_constructor, PropertyFlag.NonEnumerable),
+            ["register"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "register", Register, 2, PropertyFlag.Configurable), PropertyFlags),
+            ["unregister"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "unregister", Unregister, 1, PropertyFlag.Configurable), PropertyFlags),
+            ["cleanupSome"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "cleanupSome", CleanupSome, 0, PropertyFlag.Configurable), PropertyFlags),
         };
         SetProperties(properties);
 
-        var symbols = new SymbolDictionary(1) { [GlobalSymbolRegistry.ToStringTag] = new("FinalizationRegistry", PropertyFlag.Configurable) };
+        var symbols = new SymbolDictionary(1) { [GlobalSymbolRegistry.ToStringTag] = new DataPropertyDescriptor("FinalizationRegistry", PropertyFlag.Configurable) };
         SetSymbols(symbols);
     }
 

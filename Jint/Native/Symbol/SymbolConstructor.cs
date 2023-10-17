@@ -24,8 +24,8 @@ namespace Jint.Native.Symbol
         {
             _prototype = functionPrototype;
             PrototypeObject = new SymbolPrototype(engine, realm, this, objectPrototype);
-            _length = new PropertyDescriptor(JsNumber.PositiveZero, PropertyFlag.Configurable);
-            _prototypeDescriptor = new PropertyDescriptor(PrototypeObject, PropertyFlag.AllForbidden);
+            _length = new DataPropertyDescriptor(JsNumber.PositiveZero, PropertyFlag.Configurable);
+            _prototypeDescriptor = new DataPropertyDescriptor(PrototypeObject, PropertyFlag.AllForbidden);
         }
 
         public SymbolPrototype PrototypeObject { get; }
@@ -37,21 +37,21 @@ namespace Jint.Native.Symbol
 
             var properties = new PropertyDictionary(15, checkExistingKeys: false)
             {
-                ["for"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "for", For, 1, lengthFlags), PropertyFlag.Writable | PropertyFlag.Configurable),
-                ["keyFor"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "keyFor", KeyFor, 1, lengthFlags), PropertyFlag.Writable | PropertyFlag.Configurable),
-                ["hasInstance"] = new PropertyDescriptor(GlobalSymbolRegistry.HasInstance, propertyFlags),
-                ["isConcatSpreadable"] = new PropertyDescriptor(GlobalSymbolRegistry.IsConcatSpreadable, propertyFlags),
-                ["iterator"] = new PropertyDescriptor(GlobalSymbolRegistry.Iterator, propertyFlags),
-                ["match"] = new PropertyDescriptor(GlobalSymbolRegistry.Match, propertyFlags),
-                ["matchAll"] = new PropertyDescriptor(GlobalSymbolRegistry.MatchAll, propertyFlags),
-                ["replace"] = new PropertyDescriptor(GlobalSymbolRegistry.Replace, propertyFlags),
-                ["search"] = new PropertyDescriptor(GlobalSymbolRegistry.Search, propertyFlags),
-                ["species"] = new PropertyDescriptor(GlobalSymbolRegistry.Species, propertyFlags),
-                ["split"] = new PropertyDescriptor(GlobalSymbolRegistry.Split, propertyFlags),
-                ["toPrimitive"] = new PropertyDescriptor(GlobalSymbolRegistry.ToPrimitive, propertyFlags),
-                ["toStringTag"] = new PropertyDescriptor(GlobalSymbolRegistry.ToStringTag, propertyFlags),
-                ["unscopables"] = new PropertyDescriptor(GlobalSymbolRegistry.Unscopables, propertyFlags),
-                ["asyncIterator"] = new PropertyDescriptor(GlobalSymbolRegistry.AsyncIterator, propertyFlags)
+                ["for"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "for", For, 1, lengthFlags), PropertyFlag.Writable | PropertyFlag.Configurable),
+                ["keyFor"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "keyFor", KeyFor, 1, lengthFlags), PropertyFlag.Writable | PropertyFlag.Configurable),
+                ["hasInstance"] = new DataPropertyDescriptor(GlobalSymbolRegistry.HasInstance, propertyFlags),
+                ["isConcatSpreadable"] = new DataPropertyDescriptor(GlobalSymbolRegistry.IsConcatSpreadable, propertyFlags),
+                ["iterator"] = new DataPropertyDescriptor(GlobalSymbolRegistry.Iterator, propertyFlags),
+                ["match"] = new DataPropertyDescriptor(GlobalSymbolRegistry.Match, propertyFlags),
+                ["matchAll"] = new DataPropertyDescriptor(GlobalSymbolRegistry.MatchAll, propertyFlags),
+                ["replace"] = new DataPropertyDescriptor(GlobalSymbolRegistry.Replace, propertyFlags),
+                ["search"] = new DataPropertyDescriptor(GlobalSymbolRegistry.Search, propertyFlags),
+                ["species"] = new DataPropertyDescriptor(GlobalSymbolRegistry.Species, propertyFlags),
+                ["split"] = new DataPropertyDescriptor(GlobalSymbolRegistry.Split, propertyFlags),
+                ["toPrimitive"] = new DataPropertyDescriptor(GlobalSymbolRegistry.ToPrimitive, propertyFlags),
+                ["toStringTag"] = new DataPropertyDescriptor(GlobalSymbolRegistry.ToStringTag, propertyFlags),
+                ["unscopables"] = new DataPropertyDescriptor(GlobalSymbolRegistry.Unscopables, propertyFlags),
+                ["asyncIterator"] = new DataPropertyDescriptor(GlobalSymbolRegistry.AsyncIterator, propertyFlags)
             };
             SetProperties(properties);
         }

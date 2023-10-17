@@ -29,15 +29,15 @@ namespace Jint.Native.ArrayBuffer
             var properties = new PropertyDictionary(4, checkExistingKeys: false)
             {
                 ["byteLength"] = new GetSetPropertyDescriptor(new ClrFunctionInstance(_engine, "get byteLength", ByteLength, 0, lengthFlags), Undefined, PropertyFlag.Configurable),
-                ["constructor"] = new PropertyDescriptor(_constructor, PropertyFlag.NonEnumerable),
+                ["constructor"] = new DataPropertyDescriptor(_constructor, PropertyFlag.NonEnumerable),
                 ["detached"] = new GetSetPropertyDescriptor(new ClrFunctionInstance(_engine, "get detached", Detached, 0, lengthFlags), Undefined, PropertyFlag.Configurable),
-                ["slice"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "slice", Slice, 2, lengthFlags), PropertyFlag.Configurable | PropertyFlag.Writable)
+                ["slice"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "slice", Slice, 2, lengthFlags), PropertyFlag.Configurable | PropertyFlag.Writable)
             };
             SetProperties(properties);
 
             var symbols = new SymbolDictionary(1)
             {
-                [GlobalSymbolRegistry.ToStringTag] = new PropertyDescriptor("ArrayBuffer", PropertyFlag.Configurable)
+                [GlobalSymbolRegistry.ToStringTag] = new DataPropertyDescriptor("ArrayBuffer", PropertyFlag.Configurable)
             };
             SetSymbols(symbols);
         }

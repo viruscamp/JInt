@@ -60,7 +60,7 @@ namespace Jint.Native.Function
         {
             if (name is not null)
             {
-                _nameDescriptor = new PropertyDescriptor(name, PropertyFlag.Configurable);
+                _nameDescriptor = new DataPropertyDescriptor(name, PropertyFlag.Configurable);
             }
             _realm = realm;
             _thisMode = thisMode;
@@ -204,7 +204,7 @@ namespace Jint.Native.Function
                 name = prefix + " " + name;
             }
 
-            _nameDescriptor = new PropertyDescriptor(name, PropertyFlag.Configurable);
+            _nameDescriptor = new DataPropertyDescriptor(name, PropertyFlag.Configurable);
         }
 
         /// <summary>
@@ -349,12 +349,12 @@ namespace Jint.Native.Function
                 };
             }
 
-            _prototypeDescriptor = new PropertyDescriptor(prototype, writableProperty, enumerable: false, configurable: false);
+            _prototypeDescriptor = new DataPropertyDescriptor(prototype, writableProperty, enumerable: false, configurable: false);
         }
 
         internal void SetFunctionLength(JsNumber length)
         {
-            DefinePropertyOrThrow(CommonProperties.Length, new PropertyDescriptor(length, writable: false, enumerable: false, configurable: true));
+            DefinePropertyOrThrow(CommonProperties.Length, new DataPropertyDescriptor(length, writable: false, enumerable: false, configurable: true));
         }
 
         // native syntax doesn't expect to have private identifier indicator
@@ -381,7 +381,7 @@ namespace Jint.Native.Function
 
             public ObjectInstanceWithConstructor(Engine engine, ObjectInstance thisObj) : base(engine)
             {
-                _constructor = new PropertyDescriptor(thisObj, PropertyFlag.NonEnumerable);
+                _constructor = new DataPropertyDescriptor(thisObj, PropertyFlag.NonEnumerable);
             }
 
             public override IEnumerable<KeyValuePair<JsValue, PropertyDescriptor>> GetOwnProperties()

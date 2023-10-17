@@ -33,10 +33,10 @@ namespace Jint.Native.Error
         {
             var properties = new PropertyDictionary(3, checkExistingKeys: false)
             {
-                ["constructor"] = new PropertyDescriptor(_constructor, PropertyFlag.NonEnumerable),
-                ["message"] = new PropertyDescriptor("", PropertyFlag.Configurable | PropertyFlag.Writable),
-                ["name"] = new PropertyDescriptor(_name, PropertyFlag.Configurable | PropertyFlag.Writable),
-                ["toString"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "toString", ToString, 0, PropertyFlag.Configurable), PropertyFlag.Configurable | PropertyFlag.Writable)
+                ["constructor"] = new DataPropertyDescriptor(_constructor, PropertyFlag.NonEnumerable),
+                ["message"] = new DataPropertyDescriptor("", PropertyFlag.Configurable | PropertyFlag.Writable),
+                ["name"] = new DataPropertyDescriptor(_name, PropertyFlag.Configurable | PropertyFlag.Writable),
+                ["toString"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "toString", ToString, 0, PropertyFlag.Configurable), PropertyFlag.Configurable | PropertyFlag.Writable)
             };
             SetProperties(properties);
         }

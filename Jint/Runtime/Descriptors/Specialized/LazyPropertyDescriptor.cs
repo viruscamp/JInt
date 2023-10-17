@@ -10,14 +10,13 @@ namespace Jint.Runtime.Descriptors.Specialized
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal LazyPropertyDescriptor(object? state, Func<object?, JsValue> resolver, PropertyFlag flags)
-            : base(null, flags | PropertyFlag.CustomJsValue)
+            : base(flags)
         {
-            _flags &= ~PropertyFlag.NonData;
             _state = state;
             _resolver = resolver;
         }
 
-        protected internal override JsValue? CustomValue
+        public override JsValue Value
         {
             get => _value ??= _resolver(_state);
             set => _value = value;

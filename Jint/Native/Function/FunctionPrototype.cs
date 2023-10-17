@@ -20,7 +20,7 @@ namespace Jint.Native.Function
             : base(engine, realm, JsString.Empty)
         {
             _prototype = objectPrototype;
-            _length = new PropertyDescriptor(JsNumber.PositiveZero, PropertyFlag.Configurable);
+            _length = new DataPropertyDescriptor(JsNumber.PositiveZero, PropertyFlag.Configurable);
         }
 
         protected override void Initialize()
@@ -29,11 +29,11 @@ namespace Jint.Native.Function
             const PropertyFlag lengthFlags = PropertyFlag.Configurable;
             var properties = new PropertyDictionary(7, checkExistingKeys: false)
             {
-                ["constructor"] = new PropertyDescriptor(_realm.Intrinsics.Function, PropertyFlag.NonEnumerable),
-                ["toString"] = new PropertyDescriptor(new ClrFunctionInstance(_engine, "toString", ToString, 0, lengthFlags), propertyFlags),
-                ["apply"] = new PropertyDescriptor(new ClrFunctionInstance(_engine, "apply", Apply, 2, lengthFlags), propertyFlags),
-                ["call"] = new PropertyDescriptor(new ClrFunctionInstance(_engine, "call", CallImpl, 1, lengthFlags), propertyFlags),
-                ["bind"] = new PropertyDescriptor(new ClrFunctionInstance(_engine, "bind", Bind, 1, lengthFlags), propertyFlags),
+                ["constructor"] = new DataPropertyDescriptor(_realm.Intrinsics.Function, PropertyFlag.NonEnumerable),
+                ["toString"] = new DataPropertyDescriptor(new ClrFunctionInstance(_engine, "toString", ToString, 0, lengthFlags), propertyFlags),
+                ["apply"] = new DataPropertyDescriptor(new ClrFunctionInstance(_engine, "apply", Apply, 2, lengthFlags), propertyFlags),
+                ["call"] = new DataPropertyDescriptor(new ClrFunctionInstance(_engine, "call", CallImpl, 1, lengthFlags), propertyFlags),
+                ["bind"] = new DataPropertyDescriptor(new ClrFunctionInstance(_engine, "bind", Bind, 1, lengthFlags), propertyFlags),
                 ["arguments"] = new GetSetPropertyDescriptor.ThrowerPropertyDescriptor(_engine, PropertyFlag.Configurable),
                 ["caller"] = new GetSetPropertyDescriptor.ThrowerPropertyDescriptor(_engine, PropertyFlag.Configurable)
             };
@@ -41,7 +41,7 @@ namespace Jint.Native.Function
 
             var symbols = new SymbolDictionary(1)
             {
-                [GlobalSymbolRegistry.HasInstance] = new PropertyDescriptor(new ClrFunctionInstance(_engine, "[Symbol.hasInstance]", HasInstance, 1, PropertyFlag.Configurable), PropertyFlag.AllForbidden)
+                [GlobalSymbolRegistry.HasInstance] = new DataPropertyDescriptor(new ClrFunctionInstance(_engine, "[Symbol.hasInstance]", HasInstance, 1, PropertyFlag.Configurable), PropertyFlag.AllForbidden)
             };
             SetSymbols(symbols);
         }
@@ -101,7 +101,7 @@ namespace Jint.Native.Function
                 l = JsNumber.PositiveZero;
             }
 
-            f.DefinePropertyOrThrow(CommonProperties.Length, new PropertyDescriptor(l, PropertyFlag.Configurable));
+            f.DefinePropertyOrThrow(CommonProperties.Length, new DataPropertyDescriptor(l, PropertyFlag.Configurable));
 
             var targetName = oi.Get(CommonProperties.Name);
             if (!targetName.IsString())

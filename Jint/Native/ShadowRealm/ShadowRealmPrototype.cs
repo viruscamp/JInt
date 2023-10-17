@@ -29,14 +29,14 @@ internal sealed class ShadowRealmPrototype : Prototype
         const PropertyFlag propertyFlags = PropertyFlag.Configurable | PropertyFlag.Writable;
         var properties = new PropertyDictionary(5, checkExistingKeys: false)
         {
-            ["length"] = new PropertyDescriptor(0, PropertyFlag.Configurable),
-            ["constructor"] = new PropertyDescriptor(_constructor, PropertyFlag.NonEnumerable),
-            ["evaluate"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "evaluate", Evaluate, 1, PropertyFlag.Configurable), propertyFlags),
-            ["importValue"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "importValue", ImportValue, 2, PropertyFlag.Configurable), propertyFlags),
+            ["length"] = new DataPropertyDescriptor(0, PropertyFlag.Configurable),
+            ["constructor"] = new DataPropertyDescriptor(_constructor, PropertyFlag.NonEnumerable),
+            ["evaluate"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "evaluate", Evaluate, 1, PropertyFlag.Configurable), propertyFlags),
+            ["importValue"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "importValue", ImportValue, 2, PropertyFlag.Configurable), propertyFlags),
         };
         SetProperties(properties);
 
-        var symbols = new SymbolDictionary(1) { [GlobalSymbolRegistry.ToStringTag] = new PropertyDescriptor("ShadowRealm", false, false, true) };
+        var symbols = new SymbolDictionary(1) { [GlobalSymbolRegistry.ToStringTag] = new DataPropertyDescriptor("ShadowRealm", false, false, true) };
         SetSymbols(symbols);
     }
 

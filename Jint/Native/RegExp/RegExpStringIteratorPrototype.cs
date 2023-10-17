@@ -24,13 +24,13 @@ internal sealed class RegExpStringIteratorPrototype : IteratorPrototype
     {
         var properties = new PropertyDictionary(1, checkExistingKeys: false)
         {
-            [KnownKeys.Next] = new(new ClrFunctionInstance(Engine, "next", Next, 0, PropertyFlag.Configurable), true, false, true)
+            [KnownKeys.Next] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "next", Next, 0, PropertyFlag.Configurable), true, false, true)
         };
         SetProperties(properties);
 
         var symbols = new SymbolDictionary(1)
         {
-            [GlobalSymbolRegistry.ToStringTag] = new("RegExp String Iterator", PropertyFlag.Configurable)
+            [GlobalSymbolRegistry.ToStringTag] = new DataPropertyDescriptor("RegExp String Iterator", PropertyFlag.Configurable)
         };
         SetSymbols(symbols);
     }

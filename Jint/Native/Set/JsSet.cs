@@ -18,7 +18,7 @@ internal sealed class JsSet : ObjectInstance
     {
         if (property == CommonProperties.Size)
         {
-            return new PropertyDescriptor(_set.Count, PropertyFlag.AllForbidden);
+            return new DataPropertyDescriptor(_set.Count, PropertyFlag.AllForbidden);
         }
 
         return base.GetOwnProperty(property);
@@ -28,7 +28,7 @@ internal sealed class JsSet : ObjectInstance
     {
         if (property == CommonProperties.Size)
         {
-            descriptor = new PropertyDescriptor(_set.Count, PropertyFlag.AllForbidden);
+            descriptor = new DataPropertyDescriptor(_set.Count, PropertyFlag.AllForbidden);
             return true;
         }
 

@@ -29,18 +29,18 @@ internal sealed class WeakMapPrototype : Prototype
         const PropertyFlag propertyFlags = PropertyFlag.Configurable | PropertyFlag.Writable;
         var properties = new PropertyDictionary(6, checkExistingKeys: false)
         {
-            ["length"] = new PropertyDescriptor(0, PropertyFlag.Configurable),
-            ["constructor"] = new PropertyDescriptor(_constructor, PropertyFlag.NonEnumerable),
-            ["delete"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "delete", Delete, 1, PropertyFlag.Configurable), propertyFlags),
-            ["get"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "get", Get, 1, PropertyFlag.Configurable), propertyFlags),
-            ["has"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "has", Has, 1, PropertyFlag.Configurable), propertyFlags),
-            ["set"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "set", Set, 2, PropertyFlag.Configurable), propertyFlags),
+            ["length"] = new DataPropertyDescriptor(0, PropertyFlag.Configurable),
+            ["constructor"] = new DataPropertyDescriptor(_constructor, PropertyFlag.NonEnumerable),
+            ["delete"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "delete", Delete, 1, PropertyFlag.Configurable), propertyFlags),
+            ["get"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "get", Get, 1, PropertyFlag.Configurable), propertyFlags),
+            ["has"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "has", Has, 1, PropertyFlag.Configurable), propertyFlags),
+            ["set"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "set", Set, 2, PropertyFlag.Configurable), propertyFlags),
         };
         SetProperties(properties);
 
         var symbols = new SymbolDictionary(1)
         {
-            [GlobalSymbolRegistry.ToStringTag] = new PropertyDescriptor("WeakMap", false, false, true)
+            [GlobalSymbolRegistry.ToStringTag] = new DataPropertyDescriptor("WeakMap", false, false, true)
         };
         SetSymbols(symbols);
     }

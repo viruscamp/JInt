@@ -113,7 +113,7 @@ namespace Jint.Native.Global
                 pow *= radix;
             }
 
-            return hasResult ? JsNumber.Create(sign  * result) : JsNumber.DoubleNaN;
+            return hasResult ? JsNumber.Create(sign * result) : JsNumber.DoubleNaN;
         }
 
         /// <summary>
@@ -272,8 +272,8 @@ namespace Jint.Native.Global
             return true;
         }
 
-        private static readonly string UriReserved = new (new [] { ';', '/', '?', ':', '@', '&', '=', '+', '$', ',' });
-        private static readonly string UriUnescaped = new(new [] { '-', '_', '.', '!', '~', '*', '\'', '(', ')' });
+        private static readonly string UriReserved = new(new[] { ';', '/', '?', ':', '@', '&', '=', '+', '$', ',' });
+        private static readonly string UriUnescaped = new(new[] { '-', '_', '.', '!', '~', '*', '\'', '(', ')' });
         private static readonly string UnescapedUriSet = UriReserved + UriUnescaped + '#';
         private static readonly string ReservedUriSet = UriReserved + '#';
 
@@ -461,7 +461,7 @@ uriError:
                     k += 2;
                     if ((B & 0x80) == 0)
                     {
-                        C = (char)B;
+                        C = (char) B;
                         if (reservedSet == null || reservedSet.IndexOf(C) == -1)
                         {
                             _stringBuilder.Append(C);
@@ -474,7 +474,7 @@ uriError:
                     else
                     {
                         var n = 0;
-                        for (; ((B << n) & 0x80) != 0; n++);
+                        for (; ((B << n) & 0x80) != 0; n++) { }
 
                         if (n == 1 || n > 4)
                         {
@@ -564,15 +564,15 @@ uriError:
         private static bool IsDigit(char c, int radix, out int result)
         {
             int tmp;
-            if ((uint)(c - '0') <= 9)
+            if ((uint) (c - '0') <= 9)
             {
                 result = tmp = c - '0';
             }
-            else if ((uint)(c - 'A') <= 'Z' - 'A')
+            else if ((uint) (c - 'A') <= 'Z' - 'A')
             {
                 result = tmp = c - 'A' + 10;
             }
-            else if ((uint)(c - 'a') <= 'z' - 'a')
+            else if ((uint) (c - 'a') <= 'z' - 'a')
             {
                 result = tmp = c - 'a' + 10;
             }
@@ -639,7 +639,7 @@ uriError:
                         && uriString[k + 1] == 'u'
                         && uriString.Skip(k + 2).Take(4).All(IsValidHexaChar))
                     {
-                        c = (char)int.Parse(
+                        c = (char) int.Parse(
                             string.Join(string.Empty, uriString.Skip(k + 2).Take(4)),
                             NumberStyles.AllowHexSpecifier);
 
@@ -648,7 +648,7 @@ uriError:
                     else if (k <= strLen - 3
                         && uriString.Skip(k + 1).Take(2).All(IsValidHexaChar))
                     {
-                        c = (char)int.Parse(
+                        c = (char) int.Parse(
                             string.Join(string.Empty, uriString.Skip(k + 1).Take(2)),
                             NumberStyles.AllowHexSpecifier);
 
@@ -716,7 +716,7 @@ uriError:
                 {
                     ExceptionHelper.ThrowReferenceNameError(_realm, property.Name);
                 }
-                _properties[property] = new PropertyDescriptor(value, PropertyFlag.ConfigurableEnumerableWritable | PropertyFlag.MutableBinding);
+                _properties[property] = new DataPropertyDescriptor(value, PropertyFlag.ConfigurableEnumerableWritable | PropertyFlag.MutableBinding);
                 return true;
             }
 
@@ -735,7 +735,7 @@ uriError:
                 }
 
                 // slow path
-                return DefineOwnProperty(property, new PropertyDescriptor(value, PropertyFlag.None));
+                return DefineOwnProperty(property, new DataPropertyDescriptor(value, PropertyFlag.None));
             }
 
             if (existingDescriptor.Set is not ICallable setter)
@@ -743,7 +743,7 @@ uriError:
                 return false;
             }
 
-            setter.Call(this, new[] {value});
+            setter.Call(this, new[] { value });
 
             return true;
         }

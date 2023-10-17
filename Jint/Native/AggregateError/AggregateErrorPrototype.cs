@@ -27,9 +27,9 @@ internal sealed class AggregateErrorPrototype : Prototype
     {
         var properties = new PropertyDictionary(3, checkExistingKeys: false)
         {
-            ["constructor"] = new PropertyDescriptor(_constructor, PropertyFlag.NonEnumerable),
-            ["message"] = new PropertyDescriptor(JsString.Empty, PropertyFlag.Configurable | PropertyFlag.Writable),
-            ["name"] = new PropertyDescriptor("AggregateError", PropertyFlag.Configurable | PropertyFlag.Writable),
+            ["constructor"] = new DataPropertyDescriptor(_constructor, PropertyFlag.NonEnumerable),
+            ["message"] = new DataPropertyDescriptor(JsString.Empty, PropertyFlag.Configurable | PropertyFlag.Writable),
+            ["name"] = new DataPropertyDescriptor("AggregateError", PropertyFlag.Configurable | PropertyFlag.Writable),
         };
         SetProperties(properties);
     }

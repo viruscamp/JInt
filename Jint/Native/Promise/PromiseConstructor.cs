@@ -32,8 +32,8 @@ namespace Jint.Native.Promise
         {
             _prototype = functionPrototype;
             PrototypeObject = new PromisePrototype(engine, realm, this, objectPrototype);
-            _length = new PropertyDescriptor(1, PropertyFlag.Configurable);
-            _prototypeDescriptor = new PropertyDescriptor(PrototypeObject, PropertyFlag.AllForbidden);
+            _length = new DataPropertyDescriptor(1, PropertyFlag.Configurable);
+            _prototypeDescriptor = new DataPropertyDescriptor(PrototypeObject, PropertyFlag.AllForbidden);
         }
 
         protected override void Initialize()
@@ -42,12 +42,12 @@ namespace Jint.Native.Promise
             const PropertyFlag lengthFlags = PropertyFlag.Configurable;
             var properties = new PropertyDictionary(6, checkExistingKeys: false)
             {
-                ["resolve"] = new(new PropertyDescriptor(new ClrFunctionInstance(Engine, "resolve", Resolve, 1, lengthFlags), propertyFlags)),
-                ["reject"] = new(new PropertyDescriptor(new ClrFunctionInstance(Engine, "reject", Reject, 1, lengthFlags), propertyFlags)),
-                ["all"] = new(new PropertyDescriptor(new ClrFunctionInstance(Engine, "all", All, 1, lengthFlags), propertyFlags)),
-                ["allSettled"] = new(new PropertyDescriptor(new ClrFunctionInstance(Engine, "allSettled", AllSettled, 1, lengthFlags), propertyFlags)),
-                ["any"] = new(new PropertyDescriptor(new ClrFunctionInstance(Engine, "any", Any, 1, lengthFlags), propertyFlags)),
-                ["race"] = new(new PropertyDescriptor(new ClrFunctionInstance(Engine, "race", Race, 1, lengthFlags), propertyFlags)),
+                ["resolve"] = new DataPropertyDescriptor(new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "resolve", Resolve, 1, lengthFlags), propertyFlags)),
+                ["reject"] = new DataPropertyDescriptor(new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "reject", Reject, 1, lengthFlags), propertyFlags)),
+                ["all"] = new DataPropertyDescriptor(new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "all", All, 1, lengthFlags), propertyFlags)),
+                ["allSettled"] = new DataPropertyDescriptor(new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "allSettled", AllSettled, 1, lengthFlags), propertyFlags)),
+                ["any"] = new DataPropertyDescriptor(new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "any", Any, 1, lengthFlags), propertyFlags)),
+                ["race"] = new DataPropertyDescriptor(new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "race", Race, 1, lengthFlags), propertyFlags)),
             };
             SetProperties(properties);
 

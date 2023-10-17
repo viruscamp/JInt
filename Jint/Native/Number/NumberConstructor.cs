@@ -27,28 +27,28 @@ namespace Jint.Native.Number
         {
             _prototype = functionPrototype;
             PrototypeObject = new NumberPrototype(engine, realm, this, objectPrototype);
-            _length = new PropertyDescriptor(JsNumber.PositiveOne, PropertyFlag.Configurable);
-            _prototypeDescriptor = new PropertyDescriptor(PrototypeObject, PropertyFlag.AllForbidden);
+            _length = new DataPropertyDescriptor(JsNumber.PositiveOne, PropertyFlag.Configurable);
+            _prototypeDescriptor = new DataPropertyDescriptor(PrototypeObject, PropertyFlag.AllForbidden);
         }
 
         protected override void Initialize()
         {
             var properties = new PropertyDictionary(15, checkExistingKeys: false)
             {
-                ["MAX_VALUE"] = new PropertyDescriptor(new PropertyDescriptor(double.MaxValue, PropertyFlag.AllForbidden)),
-                ["MIN_VALUE"] = new PropertyDescriptor(new PropertyDescriptor(double.Epsilon, PropertyFlag.AllForbidden)),
-                ["NaN"] = new PropertyDescriptor(new PropertyDescriptor(double.NaN, PropertyFlag.AllForbidden)),
-                ["NEGATIVE_INFINITY"] = new PropertyDescriptor(new PropertyDescriptor(double.NegativeInfinity, PropertyFlag.AllForbidden)),
-                ["POSITIVE_INFINITY"] = new PropertyDescriptor(new PropertyDescriptor(double.PositiveInfinity, PropertyFlag.AllForbidden)),
-                ["EPSILON"] = new PropertyDescriptor(new PropertyDescriptor(JsNumber.JavaScriptEpsilon, PropertyFlag.AllForbidden)),
-                ["MIN_SAFE_INTEGER"] = new PropertyDescriptor(new PropertyDescriptor(MinSafeInteger, PropertyFlag.AllForbidden)),
-                ["MAX_SAFE_INTEGER"] = new PropertyDescriptor(new PropertyDescriptor(MaxSafeInteger, PropertyFlag.AllForbidden)),
-                ["isFinite"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "isFinite", IsFinite, 1, PropertyFlag.Configurable), true, false, true),
-                ["isInteger"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "isInteger", IsInteger, 1, PropertyFlag.Configurable), true, false, true),
-                ["isNaN"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "isNaN", IsNaN, 1, PropertyFlag.Configurable), true, false, true),
-                ["isSafeInteger"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "isSafeInteger", IsSafeInteger, 1, PropertyFlag.Configurable), true, false, true),
-                ["parseFloat"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "parseFloat", GlobalObject.ParseFloat, 0, PropertyFlag.Configurable), true, false, true),
-                ["parseInt"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "parseInt", GlobalObject.ParseInt, 0, PropertyFlag.Configurable), true, false, true)
+                ["MAX_VALUE"] = new DataPropertyDescriptor(new DataPropertyDescriptor(double.MaxValue, PropertyFlag.AllForbidden)),
+                ["MIN_VALUE"] = new DataPropertyDescriptor(new DataPropertyDescriptor(double.Epsilon, PropertyFlag.AllForbidden)),
+                ["NaN"] = new DataPropertyDescriptor(new DataPropertyDescriptor(double.NaN, PropertyFlag.AllForbidden)),
+                ["NEGATIVE_INFINITY"] = new DataPropertyDescriptor(new DataPropertyDescriptor(double.NegativeInfinity, PropertyFlag.AllForbidden)),
+                ["POSITIVE_INFINITY"] = new DataPropertyDescriptor(new DataPropertyDescriptor(double.PositiveInfinity, PropertyFlag.AllForbidden)),
+                ["EPSILON"] = new DataPropertyDescriptor(new DataPropertyDescriptor(JsNumber.JavaScriptEpsilon, PropertyFlag.AllForbidden)),
+                ["MIN_SAFE_INTEGER"] = new DataPropertyDescriptor(new DataPropertyDescriptor(MinSafeInteger, PropertyFlag.AllForbidden)),
+                ["MAX_SAFE_INTEGER"] = new DataPropertyDescriptor(new DataPropertyDescriptor(MaxSafeInteger, PropertyFlag.AllForbidden)),
+                ["isFinite"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "isFinite", IsFinite, 1, PropertyFlag.Configurable), true, false, true),
+                ["isInteger"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "isInteger", IsInteger, 1, PropertyFlag.Configurable), true, false, true),
+                ["isNaN"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "isNaN", IsNaN, 1, PropertyFlag.Configurable), true, false, true),
+                ["isSafeInteger"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "isSafeInteger", IsSafeInteger, 1, PropertyFlag.Configurable), true, false, true),
+                ["parseFloat"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "parseFloat", GlobalObject.ParseFloat, 0, PropertyFlag.Configurable), true, false, true),
+                ["parseInt"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "parseInt", GlobalObject.ParseInt, 0, PropertyFlag.Configurable), true, false, true)
             };
             SetProperties(properties);
         }

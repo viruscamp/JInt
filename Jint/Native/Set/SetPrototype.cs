@@ -28,24 +28,24 @@ internal sealed class SetPrototype : Prototype
     {
         var properties = new PropertyDictionary(12, checkExistingKeys: false)
         {
-            ["length"] = new PropertyDescriptor(0, PropertyFlag.Configurable),
-            ["constructor"] = new PropertyDescriptor(_constructor, PropertyFlag.NonEnumerable),
-            ["add"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "add", Add, 1, PropertyFlag.Configurable), true, false, true),
-            ["clear"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "clear", Clear, 0, PropertyFlag.Configurable), true, false, true),
-            ["delete"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "delete", Delete, 1, PropertyFlag.Configurable), true, false, true),
-            ["entries"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "entries", Entries, 0, PropertyFlag.Configurable), true, false, true),
-            ["forEach"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "forEach", ForEach, 1, PropertyFlag.Configurable), true, false, true),
-            ["has"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "has", Has, 1, PropertyFlag.Configurable), true, false, true),
-            ["keys"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "keys", Values, 0, PropertyFlag.Configurable), true, false, true),
-            ["values"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "values", Values, 0, PropertyFlag.Configurable), true, false, true),
+            ["length"] = new DataPropertyDescriptor(0, PropertyFlag.Configurable),
+            ["constructor"] = new DataPropertyDescriptor(_constructor, PropertyFlag.NonEnumerable),
+            ["add"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "add", Add, 1, PropertyFlag.Configurable), true, false, true),
+            ["clear"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "clear", Clear, 0, PropertyFlag.Configurable), true, false, true),
+            ["delete"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "delete", Delete, 1, PropertyFlag.Configurable), true, false, true),
+            ["entries"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "entries", Entries, 0, PropertyFlag.Configurable), true, false, true),
+            ["forEach"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "forEach", ForEach, 1, PropertyFlag.Configurable), true, false, true),
+            ["has"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "has", Has, 1, PropertyFlag.Configurable), true, false, true),
+            ["keys"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "keys", Values, 0, PropertyFlag.Configurable), true, false, true),
+            ["values"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "values", Values, 0, PropertyFlag.Configurable), true, false, true),
             ["size"] = new GetSetPropertyDescriptor(get: new ClrFunctionInstance(Engine, "get size", Size, 0, PropertyFlag.Configurable), set: null, PropertyFlag.Configurable)
         };
         SetProperties(properties);
 
         var symbols = new SymbolDictionary(2)
         {
-            [GlobalSymbolRegistry.Iterator] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "iterator", Values, 1, PropertyFlag.Configurable), true, false, true),
-            [GlobalSymbolRegistry.ToStringTag] = new PropertyDescriptor("Set", false, false, true)
+            [GlobalSymbolRegistry.Iterator] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "iterator", Values, 1, PropertyFlag.Configurable), true, false, true),
+            [GlobalSymbolRegistry.ToStringTag] = new DataPropertyDescriptor("Set", false, false, true)
         };
         SetSymbols(symbols);
     }

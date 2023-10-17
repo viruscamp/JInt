@@ -406,7 +406,7 @@ internal sealed class ClassDefinition
             return new PrivateElement { Key = (PrivateName) key, Kind = PrivateElementKind.Method, Value = closure };
         }
 
-        var desc = new PropertyDescriptor(closure, enumerable ? PropertyFlag.Enumerable : PropertyFlag.NonEnumerable);
+        var desc = new DataPropertyDescriptor(closure, enumerable ? PropertyFlag.Enumerable : PropertyFlag.NonEnumerable);
         homeObject.DefinePropertyOrThrow(key, desc);
         return null;
     }

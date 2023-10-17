@@ -16,8 +16,8 @@ internal sealed class AsyncFunctionConstructor : Constructor
     {
         PrototypeObject = new AsyncFunctionPrototype(engine, realm, this, functionConstructor.PrototypeObject);
         _prototype = functionConstructor;
-        _prototypeDescriptor = new PropertyDescriptor(PrototypeObject, PropertyFlag.AllForbidden);
-        _length = new PropertyDescriptor(JsNumber.PositiveOne, PropertyFlag.Configurable);
+        _prototypeDescriptor = new DataPropertyDescriptor(PrototypeObject, PropertyFlag.AllForbidden);
+        _length = new DataPropertyDescriptor(JsNumber.PositiveOne, PropertyFlag.Configurable);
     }
 
     public AsyncFunctionPrototype PrototypeObject { get; }

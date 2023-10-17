@@ -21,8 +21,8 @@ namespace Jint.Native.Function
         {
             PrototypeObject = new FunctionPrototype(engine, realm, objectPrototype);
             _prototype = PrototypeObject;
-            _prototypeDescriptor = new PropertyDescriptor(PrototypeObject, PropertyFlag.AllForbidden);
-            _length = new PropertyDescriptor(JsNumber.PositiveOne, PropertyFlag.Configurable);
+            _prototypeDescriptor = new DataPropertyDescriptor(PrototypeObject, PropertyFlag.AllForbidden);
+            _length = new DataPropertyDescriptor(JsNumber.PositiveOne, PropertyFlag.Configurable);
         }
 
         internal FunctionPrototype PrototypeObject { get; }

@@ -28,25 +28,25 @@ namespace Jint.Native.Reflect
         {
             var properties = new PropertyDictionary(14, checkExistingKeys: false)
             {
-                ["apply"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "apply", Apply, 3, PropertyFlag.Configurable), true, false, true),
-                ["construct"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "construct", Construct, 2, PropertyFlag.Configurable), true, false, true),
-                ["defineProperty"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "defineProperty", DefineProperty, 3, PropertyFlag.Configurable), true, false, true),
-                ["deleteProperty"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "deleteProperty", DeleteProperty, 2, PropertyFlag.Configurable), true, false, true),
-                ["get"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "get", Get, 2, PropertyFlag.Configurable), true, false, true),
-                ["getOwnPropertyDescriptor"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "getOwnPropertyDescriptor", GetOwnPropertyDescriptor, 2, PropertyFlag.Configurable), true, false, true),
-                ["getPrototypeOf"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "getPrototypeOf", GetPrototypeOf, 1, PropertyFlag.Configurable), true, false, true),
-                ["has"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "has", Has, 2, PropertyFlag.Configurable), true, false, true),
-                ["isExtensible"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "isExtensible", IsExtensible, 1, PropertyFlag.Configurable), true, false, true),
-                ["ownKeys"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "ownKeys", OwnKeys, 1, PropertyFlag.Configurable), true, false, true),
-                ["preventExtensions"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "preventExtensions", PreventExtensions, 1, PropertyFlag.Configurable), true, false, true),
-                ["set"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "set", Set, 3, PropertyFlag.Configurable), true, false, true),
-                ["setPrototypeOf"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "setPrototypeOf", SetPrototypeOf, 2, PropertyFlag.Configurable), true, false, true),
+                ["apply"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "apply", Apply, 3, PropertyFlag.Configurable), true, false, true),
+                ["construct"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "construct", Construct, 2, PropertyFlag.Configurable), true, false, true),
+                ["defineProperty"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "defineProperty", DefineProperty, 3, PropertyFlag.Configurable), true, false, true),
+                ["deleteProperty"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "deleteProperty", DeleteProperty, 2, PropertyFlag.Configurable), true, false, true),
+                ["get"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "get", Get, 2, PropertyFlag.Configurable), true, false, true),
+                ["getOwnPropertyDescriptor"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "getOwnPropertyDescriptor", GetOwnPropertyDescriptor, 2, PropertyFlag.Configurable), true, false, true),
+                ["getPrototypeOf"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "getPrototypeOf", GetPrototypeOf, 1, PropertyFlag.Configurable), true, false, true),
+                ["has"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "has", Has, 2, PropertyFlag.Configurable), true, false, true),
+                ["isExtensible"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "isExtensible", IsExtensible, 1, PropertyFlag.Configurable), true, false, true),
+                ["ownKeys"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "ownKeys", OwnKeys, 1, PropertyFlag.Configurable), true, false, true),
+                ["preventExtensions"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "preventExtensions", PreventExtensions, 1, PropertyFlag.Configurable), true, false, true),
+                ["set"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "set", Set, 3, PropertyFlag.Configurable), true, false, true),
+                ["setPrototypeOf"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "setPrototypeOf", SetPrototypeOf, 2, PropertyFlag.Configurable), true, false, true),
             };
             SetProperties(properties);
 
             var symbols = new SymbolDictionary(1)
             {
-                [GlobalSymbolRegistry.ToStringTag] = new PropertyDescriptor("Reflect", false, false, true)
+                [GlobalSymbolRegistry.ToStringTag] = new DataPropertyDescriptor("Reflect", false, false, true)
             };
             SetSymbols(symbols);
         }

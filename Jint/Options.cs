@@ -115,14 +115,14 @@ namespace Jint
             if (Interop.Enabled)
             {
                 engine.Realm.GlobalObject.SetProperty("System",
-                    new PropertyDescriptor(new NamespaceReference(engine, "System"), PropertyFlag.AllForbidden));
-                engine.Realm.GlobalObject.SetProperty("importNamespace", new PropertyDescriptor(new ClrFunctionInstance(
+                    new DataPropertyDescriptor(new NamespaceReference(engine, "System"), PropertyFlag.AllForbidden));
+                engine.Realm.GlobalObject.SetProperty("importNamespace", new DataPropertyDescriptor(new ClrFunctionInstance(
                         engine,
                         "importNamespace",
                         (thisObj, arguments) =>
                             new NamespaceReference(engine, TypeConverter.ToString(arguments.At(0)))),
                     PropertyFlag.AllForbidden));
-                engine.Realm.GlobalObject.SetProperty("clrHelper", new PropertyDescriptor(
+                engine.Realm.GlobalObject.SetProperty("clrHelper", new DataPropertyDescriptor(
                     new ObjectWrapper(engine, new ClrHelper(Interop)),
                     PropertyFlag.AllForbidden));
             }
@@ -135,7 +135,7 @@ namespace Jint
             if (Modules.RegisterRequire)
             {
                 // Node js like loading of modules
-                engine.Realm.GlobalObject.SetProperty("require", new PropertyDescriptor(new ClrFunctionInstance(
+                engine.Realm.GlobalObject.SetProperty("require", new DataPropertyDescriptor(new ClrFunctionInstance(
                         engine,
                         "require",
                         (thisObj, arguments) =>
@@ -173,7 +173,7 @@ namespace Jint
                 PropertyDescriptor CreateMethodInstancePropertyDescriptor(ClrFunctionInstance? function)
                 {
                     var instance = new MethodInfoFunctionInstance(engine, objectType, name, MethodDescriptor.Build(overloads.ToList()), function);
-                    return new PropertyDescriptor(instance, PropertyFlag.AllForbidden);
+                    return new DataPropertyDescriptor(instance, PropertyFlag.AllForbidden);
                 }
 
                 JsValue key = overloads.Key;

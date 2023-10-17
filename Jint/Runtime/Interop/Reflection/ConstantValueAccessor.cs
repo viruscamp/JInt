@@ -30,7 +30,7 @@ namespace Jint.Runtime.Interop.Reflection
         {
             return ConstantValue is null
                 ? PropertyDescriptor.Undefined
-                : new(ConstantValue, PropertyFlag.AllForbidden);
+                : new DataPropertyDescriptor(ConstantValue, PropertyFlag.AllForbidden);
         }
     }
 }

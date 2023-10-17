@@ -26,8 +26,8 @@ namespace Jint.Native.String
         {
             _prototype = functionPrototype;
             PrototypeObject = new StringPrototype(engine, realm, this, objectPrototype);
-            _length = new PropertyDescriptor(JsNumber.PositiveOne, PropertyFlag.Configurable);
-            _prototypeDescriptor = new PropertyDescriptor(PrototypeObject, PropertyFlag.AllForbidden);
+            _length = new DataPropertyDescriptor(JsNumber.PositiveOne, PropertyFlag.Configurable);
+            _prototypeDescriptor = new DataPropertyDescriptor(PrototypeObject, PropertyFlag.AllForbidden);
         }
 
         public StringPrototype PrototypeObject { get; }
@@ -36,9 +36,9 @@ namespace Jint.Native.String
         {
             var properties = new PropertyDictionary(3, checkExistingKeys: false)
             {
-                ["fromCharCode"] = new PropertyDescriptor(new PropertyDescriptor(new ClrFunctionInstance(Engine, "fromCharCode", FromCharCode, 1), PropertyFlag.NonEnumerable)),
-                ["fromCodePoint"] = new PropertyDescriptor(new PropertyDescriptor(new ClrFunctionInstance(Engine, "fromCodePoint", FromCodePoint, 1, PropertyFlag.Configurable), PropertyFlag.NonEnumerable)),
-                ["raw"] = new PropertyDescriptor(new PropertyDescriptor(new ClrFunctionInstance(Engine, "raw", Raw, 1, PropertyFlag.Configurable), PropertyFlag.NonEnumerable))
+                ["fromCharCode"] = new DataPropertyDescriptor(new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "fromCharCode", FromCharCode, 1), PropertyFlag.NonEnumerable)),
+                ["fromCodePoint"] = new DataPropertyDescriptor(new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "fromCodePoint", FromCodePoint, 1, PropertyFlag.Configurable), PropertyFlag.NonEnumerable)),
+                ["raw"] = new DataPropertyDescriptor(new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "raw", Raw, 1, PropertyFlag.Configurable), PropertyFlag.NonEnumerable))
             };
             SetProperties(properties);
         }

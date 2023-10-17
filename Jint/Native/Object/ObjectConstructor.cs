@@ -17,7 +17,7 @@ namespace Jint.Native.Object
         {
             PrototypeObject = new ObjectPrototype(engine, realm, this);
             _length = PropertyDescriptor.AllForbiddenDescriptor.NumberOne;
-            _prototypeDescriptor = new PropertyDescriptor(PrototypeObject, PropertyFlag.AllForbidden);
+            _prototypeDescriptor = new DataPropertyDescriptor(PrototypeObject, PropertyFlag.AllForbidden);
         }
 
         public ObjectPrototype PrototypeObject { get; }
@@ -30,29 +30,29 @@ namespace Jint.Native.Object
             const PropertyFlag LengthFlags = PropertyFlag.Configurable;
             var properties = new PropertyDictionary(16, checkExistingKeys: false)
             {
-                ["assign"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "assign", Assign, 2, LengthFlags), PropertyFlags),
-                ["entries"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "entries", Entries, 1, LengthFlags), PropertyFlags),
-                ["fromEntries"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "fromEntries", FromEntries, 1, LengthFlags), PropertyFlags),
-                ["getPrototypeOf"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "getPrototypeOf", GetPrototypeOf, 1), PropertyFlags),
-                ["getOwnPropertyDescriptor"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "getOwnPropertyDescriptor", GetOwnPropertyDescriptor, 2, LengthFlags), PropertyFlags),
-                ["getOwnPropertyDescriptors"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "getOwnPropertyDescriptors", GetOwnPropertyDescriptors, 1, LengthFlags), PropertyFlags),
-                ["getOwnPropertyNames"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "getOwnPropertyNames", GetOwnPropertyNames, 1), PropertyFlags),
-                ["getOwnPropertySymbols"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "getOwnPropertySymbols", GetOwnPropertySymbols, 1, LengthFlags), PropertyFlags),
-                ["groupBy"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "groupBy", GroupBy, 2, PropertyFlag.Configurable), PropertyFlags),
-                ["create"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "create", Create, 2), PropertyFlags),
-                ["defineProperty"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "defineProperty", DefineProperty, 3), PropertyFlags),
-                ["defineProperties"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "defineProperties", DefineProperties, 2), PropertyFlags),
-                ["is"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "is", Is, 2, LengthFlags), PropertyFlags),
-                ["seal"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "seal", Seal, 1, LengthFlags), PropertyFlags),
-                ["freeze"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "freeze", Freeze, 1), PropertyFlags),
-                ["preventExtensions"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "preventExtensions", PreventExtensions, 1), PropertyFlags),
-                ["isSealed"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "isSealed", IsSealed, 1), PropertyFlags),
-                ["isFrozen"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "isFrozen", IsFrozen, 1), PropertyFlags),
-                ["isExtensible"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "isExtensible", IsExtensible, 1), PropertyFlags),
-                ["keys"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "keys", Keys, 1, LengthFlags), PropertyFlags),
-                ["values"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "values", Values, 1, LengthFlags), PropertyFlags),
-                ["setPrototypeOf"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "setPrototypeOf", SetPrototypeOf, 2, LengthFlags), PropertyFlags),
-                ["hasOwn"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "hasOwn", HasOwn, 2, LengthFlags), PropertyFlags),
+                ["assign"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "assign", Assign, 2, LengthFlags), PropertyFlags),
+                ["entries"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "entries", Entries, 1, LengthFlags), PropertyFlags),
+                ["fromEntries"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "fromEntries", FromEntries, 1, LengthFlags), PropertyFlags),
+                ["getPrototypeOf"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "getPrototypeOf", GetPrototypeOf, 1), PropertyFlags),
+                ["getOwnPropertyDescriptor"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "getOwnPropertyDescriptor", GetOwnPropertyDescriptor, 2, LengthFlags), PropertyFlags),
+                ["getOwnPropertyDescriptors"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "getOwnPropertyDescriptors", GetOwnPropertyDescriptors, 1, LengthFlags), PropertyFlags),
+                ["getOwnPropertyNames"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "getOwnPropertyNames", GetOwnPropertyNames, 1), PropertyFlags),
+                ["getOwnPropertySymbols"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "getOwnPropertySymbols", GetOwnPropertySymbols, 1, LengthFlags), PropertyFlags),
+                ["groupBy"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "groupBy", GroupBy, 2, PropertyFlag.Configurable), PropertyFlags),
+                ["create"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "create", Create, 2), PropertyFlags),
+                ["defineProperty"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "defineProperty", DefineProperty, 3), PropertyFlags),
+                ["defineProperties"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "defineProperties", DefineProperties, 2), PropertyFlags),
+                ["is"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "is", Is, 2, LengthFlags), PropertyFlags),
+                ["seal"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "seal", Seal, 1, LengthFlags), PropertyFlags),
+                ["freeze"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "freeze", Freeze, 1), PropertyFlags),
+                ["preventExtensions"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "preventExtensions", PreventExtensions, 1), PropertyFlags),
+                ["isSealed"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "isSealed", IsSealed, 1), PropertyFlags),
+                ["isFrozen"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "isFrozen", IsFrozen, 1), PropertyFlags),
+                ["isExtensible"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "isExtensible", IsExtensible, 1), PropertyFlags),
+                ["keys"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "keys", Keys, 1, LengthFlags), PropertyFlags),
+                ["values"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "values", Values, 1, LengthFlags), PropertyFlags),
+                ["setPrototypeOf"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "setPrototypeOf", SetPrototypeOf, 2, LengthFlags), PropertyFlags),
+                ["hasOwn"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "hasOwn", HasOwn, 2, LengthFlags), PropertyFlags),
             };
             SetProperties(properties);
         }
@@ -137,7 +137,7 @@ namespace Jint.Native.Object
                 return Construct(arguments);
             }
 
-            if(arguments[0].IsNullOrUndefined())
+            if (arguments[0].IsNullOrUndefined())
             {
                 return Construct(arguments);
             }
@@ -185,7 +185,7 @@ namespace Jint.Native.Object
         internal ObjectInstance Construct(int propertyCount)
         {
             var obj = new JsObject(_engine);
-            obj.SetProperties(propertyCount > 0  ? new PropertyDictionary(propertyCount, checkExistingKeys: true) : null);
+            obj.SetProperties(propertyCount > 0 ? new PropertyDictionary(propertyCount, checkExistingKeys: true) : null);
             return obj;
         }
 
@@ -538,7 +538,7 @@ namespace Jint.Native.Object
             var obj = OrdinaryObjectCreate(_engine, null);
             foreach (var pair in grouping)
             {
-                obj.FastSetProperty(pair.Key, new PropertyDescriptor(pair.Value, PropertyFlag.ConfigurableEnumerableWritable));
+                obj.FastSetProperty(pair.Key, new DataPropertyDescriptor(pair.Value, PropertyFlag.ConfigurableEnumerableWritable));
             }
 
             return obj;

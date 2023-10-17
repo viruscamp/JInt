@@ -21,8 +21,8 @@ internal sealed class SetConstructor : Constructor
     {
         _prototype = functionPrototype;
         PrototypeObject = new SetPrototype(engine, realm, this, objectPrototype);
-        _length = new PropertyDescriptor(0, PropertyFlag.Configurable);
-        _prototypeDescriptor = new PropertyDescriptor(PrototypeObject, PropertyFlag.AllForbidden);
+        _length = new DataPropertyDescriptor(0, PropertyFlag.Configurable);
+        _prototypeDescriptor = new DataPropertyDescriptor(PrototypeObject, PropertyFlag.AllForbidden);
     }
 
     private SetPrototype PrototypeObject { get; }

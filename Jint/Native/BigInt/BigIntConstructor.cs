@@ -24,16 +24,16 @@ internal sealed class BigIntConstructor : Constructor
     {
         _prototype = functionPrototype;
         PrototypeObject = new BigIntPrototype(engine, this, objectPrototype);
-        _length = new PropertyDescriptor(JsNumber.PositiveOne, PropertyFlag.Configurable);
-        _prototypeDescriptor = new PropertyDescriptor(PrototypeObject, PropertyFlag.AllForbidden);
+        _length = new DataPropertyDescriptor(JsNumber.PositiveOne, PropertyFlag.Configurable);
+        _prototypeDescriptor = new DataPropertyDescriptor(PrototypeObject, PropertyFlag.AllForbidden);
     }
 
     protected override void Initialize()
     {
         var properties = new PropertyDictionary(2, checkExistingKeys: false)
         {
-            ["asIntN"] = new(new ClrFunctionInstance(Engine, "asIntN", AsIntN, 2, PropertyFlag.Configurable), true, false, true),
-            ["asUintN"] = new(new ClrFunctionInstance(Engine, "asUintN", AsUintN, 2, PropertyFlag.Configurable), true, false, true),
+            ["asIntN"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "asIntN", AsIntN, 2, PropertyFlag.Configurable), true, false, true),
+            ["asUintN"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "asUintN", AsUintN, 2, PropertyFlag.Configurable), true, false, true),
         };
         SetProperties(properties);
     }

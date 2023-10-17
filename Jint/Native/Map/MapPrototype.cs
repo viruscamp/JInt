@@ -29,25 +29,25 @@ internal sealed class MapPrototype : Prototype
         const PropertyFlag propertyFlags = PropertyFlag.Configurable | PropertyFlag.Writable;
         var properties = new PropertyDictionary(12, checkExistingKeys: false)
         {
-            ["length"] = new PropertyDescriptor(0, PropertyFlag.Configurable),
-            ["constructor"] = new PropertyDescriptor(_mapConstructor, PropertyFlag.NonEnumerable),
-            ["clear"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "clear", Clear, 0, PropertyFlag.Configurable), propertyFlags),
-            ["delete"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "delete", Delete, 1, PropertyFlag.Configurable), propertyFlags),
-            ["entries"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "entries", Entries, 0, PropertyFlag.Configurable), propertyFlags),
-            ["forEach"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "forEach", ForEach, 1, PropertyFlag.Configurable), propertyFlags),
-            ["get"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "get", Get, 1, PropertyFlag.Configurable), propertyFlags),
-            ["has"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "has", Has, 1, PropertyFlag.Configurable), propertyFlags),
-            ["keys"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "keys", Keys, 0, PropertyFlag.Configurable), propertyFlags),
-            ["set"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "set", Set, 2, PropertyFlag.Configurable), propertyFlags),
-            ["values"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "values", Values, 0, PropertyFlag.Configurable), propertyFlags),
+            ["length"] = new DataPropertyDescriptor(0, PropertyFlag.Configurable),
+            ["constructor"] = new DataPropertyDescriptor(_mapConstructor, PropertyFlag.NonEnumerable),
+            ["clear"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "clear", Clear, 0, PropertyFlag.Configurable), propertyFlags),
+            ["delete"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "delete", Delete, 1, PropertyFlag.Configurable), propertyFlags),
+            ["entries"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "entries", Entries, 0, PropertyFlag.Configurable), propertyFlags),
+            ["forEach"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "forEach", ForEach, 1, PropertyFlag.Configurable), propertyFlags),
+            ["get"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "get", Get, 1, PropertyFlag.Configurable), propertyFlags),
+            ["has"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "has", Has, 1, PropertyFlag.Configurable), propertyFlags),
+            ["keys"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "keys", Keys, 0, PropertyFlag.Configurable), propertyFlags),
+            ["set"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "set", Set, 2, PropertyFlag.Configurable), propertyFlags),
+            ["values"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "values", Values, 0, PropertyFlag.Configurable), propertyFlags),
             ["size"] = new GetSetPropertyDescriptor(get: new ClrFunctionInstance(Engine, "get size", Size, 0, PropertyFlag.Configurable), set: null, PropertyFlag.Configurable)
         };
         SetProperties(properties);
 
         var symbols = new SymbolDictionary(2)
         {
-            [GlobalSymbolRegistry.Iterator] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "iterator", Entries, 1, PropertyFlag.Configurable), propertyFlags),
-            [GlobalSymbolRegistry.ToStringTag] = new PropertyDescriptor("Map", false, false, true),
+            [GlobalSymbolRegistry.Iterator] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "iterator", Entries, 1, PropertyFlag.Configurable), propertyFlags),
+            [GlobalSymbolRegistry.ToStringTag] = new DataPropertyDescriptor("Map", false, false, true),
         };
         SetSymbols(symbols);
     }

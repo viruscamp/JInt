@@ -21,8 +21,8 @@ internal sealed class AggregateErrorConstructor : Constructor
     {
         _prototype = errorConstructor;
         PrototypeObject = new AggregateErrorPrototype(engine, realm, this, errorConstructor.PrototypeObject);
-        _length = new PropertyDescriptor(JsNumber.PositiveTwo, PropertyFlag.Configurable);
-        _prototypeDescriptor = new PropertyDescriptor(PrototypeObject, PropertyFlag.AllForbidden);
+        _length = new DataPropertyDescriptor(JsNumber.PositiveTwo, PropertyFlag.Configurable);
+        _prototypeDescriptor = new DataPropertyDescriptor(PrototypeObject, PropertyFlag.AllForbidden);
     }
 
     private AggregateErrorPrototype PrototypeObject { get; }
@@ -55,7 +55,7 @@ internal sealed class AggregateErrorConstructor : Constructor
         o.InstallErrorCause(options);
 
         var errorsList = TypedArrayConstructor.IterableToList(_realm, errors);
-        o.DefinePropertyOrThrow("errors", new PropertyDescriptor(_realm.Intrinsics.Array.CreateArrayFromList(errorsList), configurable: true, enumerable: false, writable: true));
+        o.DefinePropertyOrThrow("errors", new DataPropertyDescriptor(_realm.Intrinsics.Array.CreateArrayFromList(errorsList), configurable: true, enumerable: false, writable: true));
 
         return o;
     }

@@ -63,7 +63,7 @@ internal class StringInstance : ObjectInstance, IPrimitiveInstance
             return PropertyDescriptor.Undefined;
         }
 
-        return new PropertyDescriptor(str[index], PropertyFlag.OnlyEnumerable);
+        return new DataPropertyDescriptor(str[index], PropertyFlag.OnlyEnumerable);
     }
 
     public sealed override IEnumerable<KeyValuePair<JsValue, PropertyDescriptor>> GetOwnProperties()

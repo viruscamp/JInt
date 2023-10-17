@@ -51,7 +51,7 @@ namespace Jint.Native.Json
             _gap = BuildSpacingGap(space);
 
             var wrapper = _engine.Realm.Intrinsics.Object.Construct(Arguments.Empty);
-            wrapper.DefineOwnProperty(JsString.Empty, new PropertyDescriptor(value, PropertyFlag.ConfigurableEnumerableWritable));
+            wrapper.DefineOwnProperty(JsString.Empty, new DataPropertyDescriptor(value, PropertyFlag.ConfigurableEnumerableWritable));
 
             using var jsonBuilder = StringBuilderPool.Rent();
 

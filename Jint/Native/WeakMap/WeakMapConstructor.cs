@@ -19,8 +19,8 @@ namespace Jint.Native.WeakMap
         {
             _prototype = prototype;
             PrototypeObject = new WeakMapPrototype(engine, realm, this, objectPrototype);
-            _length = new PropertyDescriptor(0, PropertyFlag.Configurable);
-            _prototypeDescriptor = new PropertyDescriptor(PrototypeObject, PropertyFlag.AllForbidden);
+            _length = new DataPropertyDescriptor(0, PropertyFlag.Configurable);
+            _prototypeDescriptor = new DataPropertyDescriptor(PrototypeObject, PropertyFlag.AllForbidden);
         }
 
         public WeakMapPrototype PrototypeObject { get; }

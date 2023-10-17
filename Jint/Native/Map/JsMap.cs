@@ -20,7 +20,7 @@ internal sealed class JsMap : ObjectInstance
     {
         if (property == CommonProperties.Size)
         {
-            return new PropertyDescriptor(_map.Count, PropertyFlag.AllForbidden);
+            return new DataPropertyDescriptor(_map.Count, PropertyFlag.AllForbidden);
         }
 
         return base.GetOwnProperty(property);
@@ -30,7 +30,7 @@ internal sealed class JsMap : ObjectInstance
     {
         if (property == CommonProperties.Size)
         {
-            descriptor = new PropertyDescriptor(_map.Count, PropertyFlag.AllForbidden);
+            descriptor = new DataPropertyDescriptor(_map.Count, PropertyFlag.AllForbidden);
             return true;
         }
 

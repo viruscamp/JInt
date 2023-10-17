@@ -26,15 +26,15 @@ namespace Jint.Native.Json
             var properties = new PropertyDictionary(2, checkExistingKeys: false)
             {
 #pragma warning disable 618
-                ["parse"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "parse", Parse, 2, PropertyFlag.Configurable), true, false, true),
-                ["stringify"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "stringify", Stringify, 3, PropertyFlag.Configurable), true, false, true)
+                ["parse"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "parse", Parse, 2, PropertyFlag.Configurable), true, false, true),
+                ["stringify"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "stringify", Stringify, 3, PropertyFlag.Configurable), true, false, true)
 #pragma warning restore 618
             };
             SetProperties(properties);
 
             var symbols = new SymbolDictionary(1)
             {
-                [GlobalSymbolRegistry.ToStringTag] = new PropertyDescriptor("JSON", false, false, true),
+                [GlobalSymbolRegistry.ToStringTag] = new DataPropertyDescriptor("JSON", false, false, true),
             };
             SetSymbols(symbols);
         }

@@ -26,8 +26,8 @@ namespace Jint.Native.TypedArray
 
             _prototype = functionPrototype;
             PrototypeObject = new TypedArrayPrototype(engine, objectPrototype, this, type);
-            _length = new PropertyDescriptor(JsNumber.PositiveThree, PropertyFlag.Configurable);
-            _prototypeDescriptor = new PropertyDescriptor(PrototypeObject, PropertyFlag.AllForbidden);
+            _length = new DataPropertyDescriptor(JsNumber.PositiveThree, PropertyFlag.Configurable);
+            _prototypeDescriptor = new DataPropertyDescriptor(PrototypeObject, PropertyFlag.AllForbidden);
         }
 
         private TypedArrayPrototype PrototypeObject { get; }
@@ -36,7 +36,7 @@ namespace Jint.Native.TypedArray
         {
             var properties = new PropertyDictionary(1, false)
             {
-                ["BYTES_PER_ELEMENT"] = new(new PropertyDescriptor(JsNumber.Create(_arrayElementType.GetElementSize()), PropertyFlag.AllForbidden))
+                ["BYTES_PER_ELEMENT"] = new DataPropertyDescriptor(new DataPropertyDescriptor(JsNumber.Create(_arrayElementType.GetElementSize()), PropertyFlag.AllForbidden))
             };
             SetProperties(properties);
         }

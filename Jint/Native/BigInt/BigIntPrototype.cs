@@ -30,16 +30,16 @@ internal sealed class BigIntPrototype : Prototype
     {
         var properties = new PropertyDictionary(4, checkExistingKeys: false)
         {
-            ["constructor"] = new(_constructor, true, false, true),
-            ["toString"] = new(new ClrFunctionInstance(Engine, "toString", ToBigIntString, 0, PropertyFlag.Configurable), true, false, true),
-            ["toLocaleString"] = new(new ClrFunctionInstance(Engine, "toLocaleString", ToLocaleString, 0, PropertyFlag.Configurable), true, false, true),
-            ["valueOf"] = new(new ClrFunctionInstance(Engine, "valueOf", ValueOf, 0, PropertyFlag.Configurable), true, false, true),
+            ["constructor"] = new DataPropertyDescriptor(_constructor, true, false, true),
+            ["toString"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "toString", ToBigIntString, 0, PropertyFlag.Configurable), true, false, true),
+            ["toLocaleString"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "toLocaleString", ToLocaleString, 0, PropertyFlag.Configurable), true, false, true),
+            ["valueOf"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "valueOf", ValueOf, 0, PropertyFlag.Configurable), true, false, true),
         };
         SetProperties(properties);
 
         var symbols = new SymbolDictionary(1)
         {
-            [GlobalSymbolRegistry.ToStringTag] = new("BigInt", false, false, true)
+            [GlobalSymbolRegistry.ToStringTag] = new DataPropertyDescriptor("BigInt", false, false, true)
         };
         SetSymbols(symbols);
     }

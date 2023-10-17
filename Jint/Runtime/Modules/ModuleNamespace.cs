@@ -27,7 +27,7 @@ internal sealed class ModuleNamespace : ObjectInstance
     {
         var symbols = new SymbolDictionary(1)
         {
-            [GlobalSymbolRegistry.ToStringTag] = new("Module", false, false, false)
+            [GlobalSymbolRegistry.ToStringTag] = new DataPropertyDescriptor("Module", false, false, false)
         };
         SetSymbols(symbols);
     }
@@ -79,7 +79,7 @@ internal sealed class ModuleNamespace : ObjectInstance
         }
 
         var value = Get(property);
-        return new PropertyDescriptor(value, true, true, false);
+        return new DataPropertyDescriptor(value, true, true, false);
     }
 
     /// <summary>
@@ -121,6 +121,7 @@ internal sealed class ModuleNamespace : ObjectInstance
 
         if (desc.Value is not null)
         {
+            // TODO why test null of Value?
             return SameValue(desc.Value, current.Value);
         }
 

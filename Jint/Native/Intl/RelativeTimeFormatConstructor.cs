@@ -20,8 +20,8 @@ internal sealed class RelativeTimeFormatConstructor : Constructor
     {
         _prototype = functionPrototype;
         PrototypeObject = new RelativeTimeFormatPrototype(engine, realm, this, objectPrototype);
-        _length = new PropertyDescriptor(JsNumber.PositiveZero, PropertyFlag.Configurable);
-        _prototypeDescriptor = new PropertyDescriptor(PrototypeObject, PropertyFlag.AllForbidden);
+        _length = new DataPropertyDescriptor(JsNumber.PositiveZero, PropertyFlag.Configurable);
+        _prototypeDescriptor = new DataPropertyDescriptor(PrototypeObject, PropertyFlag.AllForbidden);
     }
 
     public RelativeTimeFormatPrototype PrototypeObject { get; }

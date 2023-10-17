@@ -44,7 +44,7 @@ namespace Jint.Tests.Runtime.Domain
             obj.PrototypeObject = UuidPrototype.CreatePrototypeObject(engine, obj);
 
             // The initial value of Uuid.prototype is the Date prototype object
-            obj.SetOwnProperty("prototype", new PropertyDescriptor(obj.PrototypeObject, false, false, false));
+            obj.SetOwnProperty("prototype", new DataPropertyDescriptor(obj.PrototypeObject, false, false, false));
 
             engine.SetValue("Uuid", obj);
             obj.Configure();
@@ -57,8 +57,8 @@ namespace Jint.Tests.Runtime.Domain
 
         public void Configure()
         {
-            FastSetProperty("parse", new PropertyDescriptor(new ClrFunctionInstance(Engine, "parse", Parse), true, false, true));
-            FastSetProperty("Empty", new PropertyDescriptor(JsUuid.Empty, true, false, true));
+            FastSetProperty("parse", new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "parse", Parse), true, false, true));
+            FastSetProperty("Empty", new DataPropertyDescriptor(JsUuid.Empty, true, false, true));
         }
 
         public UuidInstance Construct(JsUuid uuid) => new UuidInstance(Engine) { PrimitiveValue = uuid, _prototype = PrototypeObject };

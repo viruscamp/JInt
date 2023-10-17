@@ -113,7 +113,7 @@ namespace Jint.Runtime.Environments
         /// </summary>
         public override void CreateMutableBinding(string name, bool canBeDeleted = false)
         {
-            _bindingObject.DefinePropertyOrThrow(name, new PropertyDescriptor(Undefined, canBeDeleted
+            _bindingObject.DefinePropertyOrThrow(name, new DataPropertyDescriptor(Undefined, canBeDeleted
                 ? PropertyFlag.ConfigurableEnumerableWritable | PropertyFlag.MutableBinding
                 : PropertyFlag.NonConfigurable | PropertyFlag.MutableBinding));
         }

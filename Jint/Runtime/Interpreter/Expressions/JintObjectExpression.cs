@@ -137,7 +137,7 @@ namespace Jint.Runtime.Interpreter.Expressions
                 var objectProperty = _properties[i];
                 var valueExpression = _valueExpressions[i];
                 var propValue = valueExpression.GetValue(context).Clone();
-                properties[objectProperty!._key!] = new PropertyDescriptor(propValue, PropertyFlag.ConfigurableEnumerableWritable);
+                properties[objectProperty!._key!] = new DataPropertyDescriptor(propValue, PropertyFlag.ConfigurableEnumerableWritable);
             }
 
             obj.SetProperties(properties);
@@ -173,7 +173,7 @@ namespace Jint.Runtime.Interpreter.Expressions
                 {
                     var methodDef = property.DefineMethod(obj);
                     methodDef.Closure.SetFunctionName(methodDef.Key);
-                    var desc = new PropertyDescriptor(methodDef.Closure, PropertyFlag.ConfigurableEnumerableWritable);
+                    var desc = new DataPropertyDescriptor(methodDef.Closure, PropertyFlag.ConfigurableEnumerableWritable);
                     obj.DefinePropertyOrThrow(methodDef.Key, desc);
                     continue;
                 }
@@ -215,7 +215,7 @@ namespace Jint.Runtime.Interpreter.Expressions
                         closure.SetFunctionName(propName);
                     }
 
-                    var propDesc = new PropertyDescriptor(propValue, PropertyFlag.ConfigurableEnumerableWritable);
+                    var propDesc = new DataPropertyDescriptor(propValue, PropertyFlag.ConfigurableEnumerableWritable);
                     obj.DefinePropertyOrThrow(propName, propDesc);
                 }
                 else if (property.Kind == PropertyKind.Get || property.Kind == PropertyKind.Set)

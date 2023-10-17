@@ -19,8 +19,8 @@ namespace Jint.Native.Error
             _intrinsicDefaultProto = intrinsicDefaultProto;
             _prototype = functionPrototype;
             PrototypeObject = new ErrorPrototype(engine, realm, this, objectPrototype, name);
-            _length = new PropertyDescriptor(JsNumber.PositiveOne, PropertyFlag.Configurable);
-            _prototypeDescriptor = new PropertyDescriptor(PrototypeObject, PropertyFlag.AllForbidden);
+            _length = new DataPropertyDescriptor(JsNumber.PositiveOne, PropertyFlag.Configurable);
+            _prototypeDescriptor = new DataPropertyDescriptor(PrototypeObject, PropertyFlag.AllForbidden);
         }
 
         internal ErrorPrototype PrototypeObject { get; }
@@ -49,14 +49,14 @@ namespace Jint.Native.Error
             if (!jsValue.IsUndefined())
             {
                 var msg = TypeConverter.ToString(jsValue);
-                var msgDesc = new PropertyDescriptor(msg, true, false, true);
+                var msgDesc = new DataPropertyDescriptor(msg, true, false, true);
                 o.DefinePropertyOrThrow("message", msgDesc);
             }
 
             var stackString = BuildStackString();
             if (stackString is not null)
             {
-                var stackDesc = new PropertyDescriptor(stackString, PropertyFlag.NonEnumerable);
+                var stackDesc = new DataPropertyDescriptor(stackString, PropertyFlag.NonEnumerable);
                 o.DefinePropertyOrThrow(CommonProperties.Stack, stackDesc);
             }
 

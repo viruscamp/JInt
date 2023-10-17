@@ -2,23 +2,21 @@ using Jint.Native;
 
 namespace Jint.Runtime.Descriptors
 {
-    public sealed class GetSetPropertyDescriptor : PropertyDescriptor
+    public sealed class GetSetPropertyDescriptor : PropertyDescriptor, INonData
     {
         private JsValue? _get;
         private JsValue? _set;
 
         public GetSetPropertyDescriptor(JsValue? get, JsValue? set, bool? enumerable = null, bool? configurable = null)
-        : base(null, writable: null, enumerable: enumerable, configurable: configurable)
+        : base(writable: null, enumerable: enumerable, configurable: configurable)
         {
-            _flags |= PropertyFlag.NonData;
             _get = get;
             _set = set;
         }
 
         internal GetSetPropertyDescriptor(JsValue? get, JsValue? set, PropertyFlag flags)
-            : base(null, flags)
+            : base(flags)
         {
-            _flags |= PropertyFlag.NonData;
             _flags &= ~PropertyFlag.WritableSet;
             _flags &= ~PropertyFlag.Writable;
             _get = get;
@@ -27,7 +25,6 @@ namespace Jint.Runtime.Descriptors
 
         public GetSetPropertyDescriptor(PropertyDescriptor descriptor) : base(descriptor)
         {
-            _flags |= PropertyFlag.NonData;
             _flags &= ~PropertyFlag.WritableSet;
             _flags &= ~PropertyFlag.Writable;
             _get = descriptor.Get;
@@ -36,6 +33,12 @@ namespace Jint.Runtime.Descriptors
 
         public override JsValue? Get => _get;
         public override JsValue? Set => _set;
+
+        public override JsValue Value
+        {
+            get => JsValue.Undefined;
+            set { }
+        }
 
         internal void SetGet(JsValue getter)
         {
@@ -47,23 +50,23 @@ namespace Jint.Runtime.Descriptors
             _set = setter;
         }
 
-        internal sealed class ThrowerPropertyDescriptor : PropertyDescriptor
+        internal sealed class ThrowerPropertyDescriptor : PropertyDescriptor, INonData
         {
             private readonly Engine _engine;
             private JsValue? _thrower;
 
             public ThrowerPropertyDescriptor(Engine engine, PropertyFlag flags)
-                : base(flags | PropertyFlag.CustomJsValue)
+                : base(flags)
             {
-                _flags |= PropertyFlag.NonData;
                 _engine = engine;
             }
 
             public override JsValue Get => _thrower ??= _engine.Realm.Intrinsics.ThrowTypeError;
             public override JsValue Set => _thrower ??= _engine.Realm.Intrinsics.ThrowTypeError;
 
-            protected internal override JsValue? CustomValue
+            public override JsValue Value
             {
+                get => JsValue.Undefined;
                 set => ExceptionHelper.ThrowInvalidOperationException("making changes to throw type error property's descriptor is not allowed");
             }
         }

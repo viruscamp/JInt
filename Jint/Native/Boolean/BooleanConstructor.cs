@@ -18,8 +18,8 @@ namespace Jint.Native.Boolean
         {
             _prototype = functionPrototype;
             PrototypeObject = new BooleanPrototype(engine, realm, this, objectPrototype);
-            _length = new PropertyDescriptor(JsNumber.PositiveOne, PropertyFlag.Configurable);
-            _prototypeDescriptor = new PropertyDescriptor(PrototypeObject, PropertyFlag.AllForbidden);
+            _length = new DataPropertyDescriptor(JsNumber.PositiveOne, PropertyFlag.Configurable);
+            _prototypeDescriptor = new DataPropertyDescriptor(PrototypeObject, PropertyFlag.AllForbidden);
         }
 
         public BooleanPrototype PrototypeObject { get; }

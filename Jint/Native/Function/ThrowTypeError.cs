@@ -9,7 +9,7 @@ namespace Jint.Native.Function
             : base(engine, realm, null)
         {
             _length = PropertyDescriptor.AllForbiddenDescriptor.NumberZero;
-            _nameDescriptor = new PropertyDescriptor(JsString.Empty, PropertyFlag.AllForbidden);
+            _nameDescriptor = new DataPropertyDescriptor(JsString.Empty, PropertyFlag.AllForbidden);
             _environment = realm.GlobalEnv;
             PreventExtensions();
         }

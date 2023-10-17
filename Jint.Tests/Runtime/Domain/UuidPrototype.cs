@@ -28,15 +28,15 @@ namespace Jint.Tests.Runtime.Domain
                 _prototype = engine.Realm.Intrinsics.Object.PrototypeObject,
             };
 
-            obj.FastSetProperty("constructor", new PropertyDescriptor(ctor, false, false, true));
+            obj.FastSetProperty("constructor", new DataPropertyDescriptor(ctor, false, false, true));
 
             return obj;
         }
 
         public void Configure()
         {
-            FastSetProperty("toString", new PropertyDescriptor(new ClrFunctionInstance(Engine, "toString", ToGuidString), true, false, true));
-            FastSetProperty("valueOf", new PropertyDescriptor(new ClrFunctionInstance(Engine, "valueOf", ValueOf), true, false, true));
+            FastSetProperty("toString", new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "toString", ToGuidString), true, false, true));
+            FastSetProperty("valueOf", new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "valueOf", ValueOf), true, false, true));
         }
     }
 }

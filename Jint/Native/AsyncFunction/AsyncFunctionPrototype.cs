@@ -27,13 +27,13 @@ internal sealed class AsyncFunctionPrototype : Prototype
     {
         var properties = new PropertyDictionary(1, checkExistingKeys: false)
         {
-            [KnownKeys.Constructor] = new(_constructor, PropertyFlag.NonEnumerable),
+            [KnownKeys.Constructor] = new DataPropertyDescriptor(_constructor, PropertyFlag.NonEnumerable),
         };
         SetProperties(properties);
 
         var symbols = new SymbolDictionary(1)
         {
-            [GlobalSymbolRegistry.ToStringTag] = new("AsyncFunction", PropertyFlag.Configurable)
+            [GlobalSymbolRegistry.ToStringTag] = new DataPropertyDescriptor("AsyncFunction", PropertyFlag.Configurable)
         };
         SetSymbols(symbols);
     }

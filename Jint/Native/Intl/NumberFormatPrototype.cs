@@ -27,13 +27,13 @@ internal sealed class NumberFormatPrototype : Prototype
     {
         var properties = new PropertyDictionary(2, checkExistingKeys: false)
         {
-            ["constructor"] = new PropertyDescriptor(_constructor, true, false, true),
+            ["constructor"] = new DataPropertyDescriptor(_constructor, true, false, true),
         };
         SetProperties(properties);
 
         var symbols = new SymbolDictionary(1)
         {
-            [GlobalSymbolRegistry.ToStringTag] = new("Intl.NumberFormat", PropertyFlag.Configurable)
+            [GlobalSymbolRegistry.ToStringTag] = new DataPropertyDescriptor("Intl.NumberFormat", PropertyFlag.Configurable)
         };
         SetSymbols(symbols);
     }

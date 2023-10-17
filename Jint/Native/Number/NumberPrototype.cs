@@ -35,13 +35,13 @@ namespace Jint.Native.Number
         {
             var properties = new PropertyDictionary(8, checkExistingKeys: false)
             {
-                ["constructor"] = new PropertyDescriptor(_constructor, true, false, true),
-                ["toString"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "toString", ToNumberString, 1, PropertyFlag.Configurable), true, false, true),
-                ["toLocaleString"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "toLocaleString", ToLocaleString, 0, PropertyFlag.Configurable), true, false, true),
-                ["valueOf"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "valueOf", ValueOf, 0, PropertyFlag.Configurable), true, false, true),
-                ["toFixed"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "toFixed", ToFixed, 1, PropertyFlag.Configurable), true, false, true),
-                ["toExponential"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "toExponential", ToExponential, 1, PropertyFlag.Configurable), true, false, true),
-                ["toPrecision"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "toPrecision", ToPrecision, 1, PropertyFlag.Configurable), true, false, true)
+                ["constructor"] = new DataPropertyDescriptor(_constructor, true, false, true),
+                ["toString"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "toString", ToNumberString, 1, PropertyFlag.Configurable), true, false, true),
+                ["toLocaleString"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "toLocaleString", ToLocaleString, 0, PropertyFlag.Configurable), true, false, true),
+                ["valueOf"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "valueOf", ValueOf, 0, PropertyFlag.Configurable), true, false, true),
+                ["toFixed"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "toFixed", ToFixed, 1, PropertyFlag.Configurable), true, false, true),
+                ["toExponential"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "toExponential", ToExponential, 1, PropertyFlag.Configurable), true, false, true),
+                ["toPrecision"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "toPrecision", ToPrecision, 1, PropertyFlag.Configurable), true, false, true)
             };
             SetProperties(properties);
         }

@@ -26,13 +26,13 @@ internal sealed class LocalePrototype : Prototype
     {
         var properties = new PropertyDictionary(2, checkExistingKeys: false)
         {
-            ["constructor"] = new PropertyDescriptor(_constructor, true, false, true),
+            ["constructor"] = new DataPropertyDescriptor(_constructor, true, false, true),
         };
         SetProperties(properties);
 
         var symbols = new SymbolDictionary(1)
         {
-            [GlobalSymbolRegistry.ToStringTag] = new("Intl.Locale", PropertyFlag.Configurable)
+            [GlobalSymbolRegistry.ToStringTag] = new DataPropertyDescriptor("Intl.Locale", PropertyFlag.Configurable)
         };
         SetSymbols(symbols);
     }

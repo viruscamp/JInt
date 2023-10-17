@@ -178,7 +178,7 @@ namespace Jint.Native.Object
         internal void SetDataProperty(string property, JsValue value)
         {
             _properties ??= new PropertyDictionary();
-            _properties[property] = new PropertyDescriptor(value, PropertyFlag.ConfigurableEnumerableWritable);
+            _properties[property] = new DataPropertyDescriptor(value, PropertyFlag.ConfigurableEnumerableWritable);
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]
@@ -389,14 +389,9 @@ namespace Jint.Native.Object
 
         internal static JsValue UnwrapJsValue(PropertyDescriptor desc, JsValue thisObject)
         {
-            var value = (desc._flags & PropertyFlag.CustomJsValue) != 0
-                ? desc.CustomValue
-                : desc._value;
-
-            // IsDataDescriptor inlined
-            if ((desc._flags & (PropertyFlag.WritableSet | PropertyFlag.Writable)) != 0 || value is not null)
+            if (desc.IsDataDescriptor())
             {
-                return value ?? Undefined;
+                return desc.Value;
             }
 
             return UnwrapFromGetter(desc, thisObject);
@@ -533,7 +528,7 @@ namespace Jint.Native.Object
             return Set(property, value, this);
         }
 
-        private static readonly PropertyDescriptor _marker = new(Undefined, PropertyFlag.ConfigurableEnumerableWritable);
+        private static readonly PropertyDescriptor _marker = new DataPropertyDescriptor(Undefined, PropertyFlag.ConfigurableEnumerableWritable);
 
         /// <summary>
         /// https://tc39.es/ecma262/#sec-ordinarysetwithowndescriptor
@@ -597,7 +592,7 @@ namespace Jint.Native.Object
                         return false;
                     }
 
-                    var valueDesc = new PropertyDescriptor(value, PropertyFlag.None);
+                    var valueDesc = new DataPropertyDescriptor(value, PropertyFlag.None);
                     return oi.DefineOwnProperty(property, valueDesc);
                 }
                 else
@@ -777,15 +772,15 @@ namespace Jint.Native.Object
                         PropertyDescriptor propertyDescriptor;
                         if ((desc._flags & PropertyFlag.ConfigurableEnumerableWritable) == PropertyFlag.ConfigurableEnumerableWritable)
                         {
-                            propertyDescriptor = new PropertyDescriptor(descValue ?? Undefined, PropertyFlag.ConfigurableEnumerableWritable);
+                            propertyDescriptor = new DataPropertyDescriptor(descValue ?? Undefined, PropertyFlag.ConfigurableEnumerableWritable);
                         }
                         else if ((desc._flags & PropertyFlag.ConfigurableEnumerableWritable) == 0)
                         {
-                            propertyDescriptor = new PropertyDescriptor(descValue ?? Undefined, PropertyFlag.AllForbidden);
+                            propertyDescriptor = new DataPropertyDescriptor(descValue ?? Undefined, PropertyFlag.AllForbidden);
                         }
                         else
                         {
-                            propertyDescriptor = new PropertyDescriptor(desc)
+                            propertyDescriptor = new DataPropertyDescriptor(desc)
                             {
                                 Value = descValue ?? Undefined
                             };
@@ -861,7 +856,7 @@ namespace Jint.Native.Object
 
                     if (o is not null)
                     {
-                        var flags = current.Flags & ~(PropertyFlag.Writable | PropertyFlag.WritableSet | PropertyFlag.CustomJsValue);
+                        var flags = current.Flags & ~(PropertyFlag.Writable | PropertyFlag.WritableSet);
                         if (current.IsDataDescriptor())
                         {
                             o.SetOwnProperty(property, current = new GetSetPropertyDescriptor(
@@ -872,7 +867,7 @@ namespace Jint.Native.Object
                         }
                         else
                         {
-                            o.SetOwnProperty(property, current = new PropertyDescriptor(
+                            o.SetOwnProperty(property, current = new DataPropertyDescriptor(
                                 value: Undefined,
                                 flags
                             ));
@@ -1055,7 +1050,7 @@ namespace Jint.Native.Object
                         converted = result;
                         break;
                     }
-                    
+
                     if (this is JsTypedArray typedArrayInstance)
                     {
                         converted = typedArrayInstance._arrayElementType switch
@@ -1301,7 +1296,7 @@ namespace Jint.Native.Object
                 name = prefix + " " + name;
             }
 
-            DefinePropertyOrThrow(CommonProperties.Name, new PropertyDescriptor(name, PropertyFlag.Configurable));
+            DefinePropertyOrThrow(CommonProperties.Name, new DataPropertyDescriptor(name, PropertyFlag.Configurable));
         }
 
         /// <summary>
@@ -1309,7 +1304,7 @@ namespace Jint.Native.Object
         /// </summary>
         internal virtual bool CreateMethodProperty(JsValue p, JsValue v)
         {
-            var newDesc = new PropertyDescriptor(v, PropertyFlag.NonEnumerable);
+            var newDesc = new DataPropertyDescriptor(v, PropertyFlag.NonEnumerable);
             return DefineOwnProperty(p, newDesc);
         }
 
@@ -1319,7 +1314,7 @@ namespace Jint.Native.Object
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool CreateDataProperty(JsValue p, JsValue v)
         {
-            return DefineOwnProperty(p, new PropertyDescriptor(v, PropertyFlag.ConfigurableEnumerableWritable));
+            return DefineOwnProperty(p, new DataPropertyDescriptor(v, PropertyFlag.ConfigurableEnumerableWritable));
         }
 
 
@@ -1342,7 +1337,7 @@ namespace Jint.Native.Object
         /// </summary>
         internal void CreateNonEnumerableDataPropertyOrThrow(JsValue p, JsValue v)
         {
-            var newDesc = new PropertyDescriptor(v, true, false, true);
+            var newDesc = new DataPropertyDescriptor(v, true, false, true);
             DefinePropertyOrThrow(p, newDesc);
         }
 
@@ -1588,7 +1583,7 @@ namespace Jint.Native.Object
                 for (var i = 0; i < keys.Count; i++)
                 {
                     var k = keys[i];
-                    DefinePropertyOrThrow(k, new PropertyDescriptor { Configurable = false });
+                    DefinePropertyOrThrow(k, new DataPropertyDescriptor { Configurable = false });
                 }
             }
             else
@@ -1602,11 +1597,11 @@ namespace Jint.Native.Object
                         PropertyDescriptor desc;
                         if (currentDesc.IsAccessorDescriptor())
                         {
-                            desc = new PropertyDescriptor { Configurable = false };
+                            desc = new DataPropertyDescriptor { Configurable = false };
                         }
                         else
                         {
-                            desc = new PropertyDescriptor { Configurable = false, Writable = false };
+                            desc = new DataPropertyDescriptor { Configurable = false, Writable = false };
                         }
 
                         DefinePropertyOrThrow(k, desc);

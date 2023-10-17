@@ -32,17 +32,17 @@ internal sealed class WeakSetPrototype : Prototype
         const PropertyFlag PropertyFlags = PropertyFlag.Configurable | PropertyFlag.Writable;
         var properties = new PropertyDictionary(5, checkExistingKeys: false)
         {
-            ["length"] = new(0, PropertyFlag.Configurable),
-            ["constructor"] = new(_constructor, PropertyFlag.NonEnumerable),
-            ["delete"] = new(new ClrFunctionInstance(Engine, "delete", Delete, 1, PropertyFlag.Configurable), PropertyFlags),
-            ["add"] = new(_originalAddFunction, PropertyFlags),
-            ["has"] = new(new ClrFunctionInstance(Engine, "has", Has, 1, PropertyFlag.Configurable), PropertyFlags),
+            ["length"] = new DataPropertyDescriptor(0, PropertyFlag.Configurable),
+            ["constructor"] = new DataPropertyDescriptor(_constructor, PropertyFlag.NonEnumerable),
+            ["delete"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "delete", Delete, 1, PropertyFlag.Configurable), PropertyFlags),
+            ["add"] = new DataPropertyDescriptor(_originalAddFunction, PropertyFlags),
+            ["has"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "has", Has, 1, PropertyFlag.Configurable), PropertyFlags),
         };
         SetProperties(properties);
 
         var symbols = new SymbolDictionary(1)
         {
-            [GlobalSymbolRegistry.ToStringTag] = new("WeakSet", false, false, true)
+            [GlobalSymbolRegistry.ToStringTag] = new DataPropertyDescriptor("WeakSet", false, false, true)
         };
         SetSymbols(symbols);
     }

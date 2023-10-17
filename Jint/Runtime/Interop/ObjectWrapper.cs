@@ -200,7 +200,7 @@ namespace Jint.Runtime.Interop
                         1,
                         PropertyFlag.Configurable);
 
-                    var iteratorProperty = new PropertyDescriptor(iteratorFunction, PropertyFlag.Configurable | PropertyFlag.Writable);
+                    var iteratorProperty = new DataPropertyDescriptor(iteratorFunction, PropertyFlag.Configurable | PropertyFlag.Writable);
                     SetProperty(GlobalSymbolRegistry.Iterator, iteratorProperty);
                     return iteratorProperty;
                 }
@@ -224,14 +224,14 @@ namespace Jint.Runtime.Interop
                     {
                         flags |= PropertyFlag.Configurable;
                     }
-                    return new PropertyDescriptor(FromObject(_engine, value), flags);
+                    return new DataPropertyDescriptor(FromObject(_engine, value), flags);
                 }
             }
 
             var result = Engine.Options.Interop.MemberAccessor(Engine, Target, member);
             if (result is not null)
             {
-                return new PropertyDescriptor(result, PropertyFlag.OnlyEnumerable);
+                return new DataPropertyDescriptor(result, PropertyFlag.OnlyEnumerable);
             }
 
             var accessor = _engine.Options.Interop.TypeResolver.GetAccessor(_engine, ClrType, member);

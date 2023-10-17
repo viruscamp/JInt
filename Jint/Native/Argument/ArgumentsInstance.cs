@@ -53,7 +53,7 @@ namespace Jint.Native.Argument
             _canReturnToPool = false;
             var args = _args;
 
-            DefinePropertyOrThrow(CommonProperties.Length, new PropertyDescriptor(_args.Length, PropertyFlag.NonEnumerable));
+            DefinePropertyOrThrow(CommonProperties.Length, new DataPropertyDescriptor(_args.Length, PropertyFlag.NonEnumerable));
 
             if (_func is null)
             {
@@ -80,7 +80,7 @@ namespace Jint.Native.Argument
 
                     for (uint i = 0; i < (uint) args.Length; i++)
                     {
-                        SetOwnProperty(JsString.Create(i), new PropertyDescriptor(args[i], PropertyFlag.ConfigurableEnumerableWritable));
+                        SetOwnProperty(JsString.Create(i), new DataPropertyDescriptor(args[i], PropertyFlag.ConfigurableEnumerableWritable));
                         if (i < _names.Length)
                         {
                             var name = _names[i];
@@ -95,11 +95,11 @@ namespace Jint.Native.Argument
                 ParameterMap = map;
 
                 // step 13
-                DefinePropertyOrThrow(CommonProperties.Callee, new PropertyDescriptor(_func, PropertyFlag.NonEnumerable));
+                DefinePropertyOrThrow(CommonProperties.Callee, new DataPropertyDescriptor(_func, PropertyFlag.NonEnumerable));
             }
 
             var iteratorFunction = new ClrFunctionInstance(Engine, "iterator", _engine.Realm.Intrinsics.Array.PrototypeObject.Values, 0, PropertyFlag.Configurable);
-            DefinePropertyOrThrow(GlobalSymbolRegistry.Iterator, new PropertyDescriptor(iteratorFunction, PropertyFlag.Writable | PropertyFlag.Configurable));
+            DefinePropertyOrThrow(GlobalSymbolRegistry.Iterator, new DataPropertyDescriptor(iteratorFunction, PropertyFlag.Writable | PropertyFlag.Configurable));
         }
 
         public ObjectInstance? ParameterMap { get; set; }
@@ -145,7 +145,7 @@ namespace Jint.Native.Argument
 
             if (ownDesc.IsDataDescriptor())
             {
-                var valueDesc = new PropertyDescriptor(value, PropertyFlag.None);
+                var valueDesc = new DataPropertyDescriptor(value, PropertyFlag.None);
                 return DefineOwnProperty(property, valueDesc);
             }
 
@@ -162,7 +162,7 @@ namespace Jint.Native.Argument
             }
             else
             {
-                var newDesc = new PropertyDescriptor(value, PropertyFlag.ConfigurableEnumerableWritable);
+                var newDesc = new DataPropertyDescriptor(value, PropertyFlag.ConfigurableEnumerableWritable);
                 return DefineOwnProperty(property, newDesc);
             }
 

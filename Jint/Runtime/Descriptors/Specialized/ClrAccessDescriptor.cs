@@ -4,7 +4,7 @@ using Jint.Runtime.Interop;
 
 namespace Jint.Runtime.Descriptors.Specialized
 {
-    internal sealed class ClrAccessDescriptor : PropertyDescriptor
+    internal sealed class ClrAccessDescriptor : PropertyDescriptor, INonData
     {
         private readonly DeclarativeEnvironmentRecord _env;
         private readonly Engine _engine;
@@ -17,9 +17,8 @@ namespace Jint.Runtime.Descriptors.Specialized
             DeclarativeEnvironmentRecord env,
             Engine engine,
             string name)
-            : base(value: null, PropertyFlag.Configurable)
+            : base(PropertyFlag.Configurable)
         {
-            _flags |= PropertyFlag.NonData;
             _env = env;
             _engine = engine;
             _name = new EnvironmentRecord.BindingName(name);
@@ -27,6 +26,12 @@ namespace Jint.Runtime.Descriptors.Specialized
 
         public override JsValue Get => _get ??= new GetterFunctionInstance(_engine, DoGet);
         public override JsValue Set => _set ??= new SetterFunctionInstance(_engine, DoSet);
+
+        public override JsValue Value
+        {
+            get => JsValue.Undefined;
+            set => ExceptionHelper.ThrowNotImplementedException();
+        }
 
         private JsValue DoGet(JsValue n)
         {

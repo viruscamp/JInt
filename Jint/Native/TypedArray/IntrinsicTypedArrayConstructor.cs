@@ -21,8 +21,8 @@ namespace Jint.Native.TypedArray
         {
             _prototype = functionPrototype;
             PrototypeObject = new IntrinsicTypedArrayPrototype(engine, objectPrototype, this);
-            _length = new PropertyDescriptor(JsNumber.PositiveZero, PropertyFlag.Configurable);
-            _prototypeDescriptor = new PropertyDescriptor(PrototypeObject, PropertyFlag.AllForbidden);
+            _length = new DataPropertyDescriptor(JsNumber.PositiveZero, PropertyFlag.Configurable);
+            _prototypeDescriptor = new DataPropertyDescriptor(PrototypeObject, PropertyFlag.AllForbidden);
         }
 
         public IntrinsicTypedArrayPrototype PrototypeObject { get; }
@@ -31,8 +31,8 @@ namespace Jint.Native.TypedArray
         {
             var properties = new PropertyDictionary(2, false)
             {
-                ["from"] = new(new PropertyDescriptor(new ClrFunctionInstance(Engine, "from", From, 1, PropertyFlag.Configurable), PropertyFlag.NonEnumerable)),
-                ["of"] = new(new PropertyDescriptor(new ClrFunctionInstance(Engine, "of", Of, 0, PropertyFlag.Configurable), PropertyFlag.NonEnumerable))
+                ["from"] = new DataPropertyDescriptor(new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "from", From, 1, PropertyFlag.Configurable), PropertyFlag.NonEnumerable)),
+                ["of"] = new DataPropertyDescriptor(new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "of", Of, 0, PropertyFlag.Configurable), PropertyFlag.NonEnumerable))
             };
             SetProperties(properties);
 

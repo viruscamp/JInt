@@ -25,13 +25,13 @@ internal sealed class ArrayIteratorPrototype : IteratorPrototype
     {
         var properties = new PropertyDictionary(1, checkExistingKeys: false)
         {
-            [KnownKeys.Next] = new(new ClrFunctionInstance(Engine, "next", Next, 0, PropertyFlag.Configurable), true, false, true)
+            [KnownKeys.Next] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "next", Next, 0, PropertyFlag.Configurable), true, false, true)
         };
         SetProperties(properties);
 
         var symbols = new SymbolDictionary(1)
         {
-            [GlobalSymbolRegistry.ToStringTag] = new("Array Iterator", PropertyFlag.Configurable)
+            [GlobalSymbolRegistry.ToStringTag] = new DataPropertyDescriptor("Array Iterator", PropertyFlag.Configurable)
         };
         SetSymbols(symbols);
     }
@@ -39,7 +39,7 @@ internal sealed class ArrayIteratorPrototype : IteratorPrototype
     internal IteratorInstance Construct(ObjectInstance array, ArrayIteratorType kind)
     {
         IteratorInstance instance = array is JsArray jsArray
-            ? new ArrayIterator(Engine, jsArray, kind)  { _prototype = this }
+            ? new ArrayIterator(Engine, jsArray, kind) { _prototype = this }
             : new ArrayLikeIterator(Engine, array, kind) { _prototype = this };
 
         return instance;

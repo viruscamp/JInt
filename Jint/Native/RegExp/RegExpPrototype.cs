@@ -67,10 +67,10 @@ namespace Jint.Native.RegExp
             const PropertyFlag propertyFlags = PropertyFlag.Configurable | PropertyFlag.Writable;
             var properties = new PropertyDictionary(14, checkExistingKeys: false)
             {
-                ["constructor"] = new PropertyDescriptor(_constructor, propertyFlags),
-                ["toString"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "toString", ToRegExpString, 0, lengthFlags), propertyFlags),
-                ["exec"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "exec", _defaultExec, 1, lengthFlags), propertyFlags),
-                ["test"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "test", Test, 1, lengthFlags), propertyFlags),
+                ["constructor"] = new DataPropertyDescriptor(_constructor, propertyFlags),
+                ["toString"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "toString", ToRegExpString, 0, lengthFlags), propertyFlags),
+                ["exec"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "exec", _defaultExec, 1, lengthFlags), propertyFlags),
+                ["test"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "test", Test, 1, lengthFlags), propertyFlags),
                 ["dotAll"] = CreateGetAccessorDescriptor("get dotAll", static r => r.DotAll),
                 ["flags"] = new GetSetPropertyDescriptor(get: new ClrFunctionInstance(Engine, "get flags", Flags, 0, lengthFlags), set: Undefined, flags: PropertyFlag.Configurable),
                 ["global"] = CreateGetAccessorDescriptor("get global", static r => r.Global),
@@ -86,11 +86,11 @@ namespace Jint.Native.RegExp
 
             var symbols = new SymbolDictionary(5)
             {
-                [GlobalSymbolRegistry.Match] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "[Symbol.match]", Match, 1, lengthFlags), propertyFlags),
-                [GlobalSymbolRegistry.MatchAll] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "[Symbol.matchAll]", MatchAll, 1, lengthFlags), propertyFlags),
-                [GlobalSymbolRegistry.Replace] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "[Symbol.replace]", Replace, 2, lengthFlags), propertyFlags),
-                [GlobalSymbolRegistry.Search] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "[Symbol.search]", Search, 1, lengthFlags), propertyFlags),
-                [GlobalSymbolRegistry.Split] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "[Symbol.split]", Split, 2, lengthFlags), propertyFlags)
+                [GlobalSymbolRegistry.Match] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "[Symbol.match]", Match, 1, lengthFlags), propertyFlags),
+                [GlobalSymbolRegistry.MatchAll] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "[Symbol.matchAll]", MatchAll, 1, lengthFlags), propertyFlags),
+                [GlobalSymbolRegistry.Replace] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "[Symbol.replace]", Replace, 2, lengthFlags), propertyFlags),
+                [GlobalSymbolRegistry.Search] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "[Symbol.search]", Search, 1, lengthFlags), propertyFlags),
+                [GlobalSymbolRegistry.Split] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "[Symbol.split]", Split, 2, lengthFlags), propertyFlags)
             };
             SetSymbols(symbols);
         }

@@ -101,7 +101,7 @@ public class JavaScriptException : JintException
             else
             {
                 _callStack = engine.CallStack.BuildCallStackString(location);
-                errObj.FastSetProperty(CommonProperties.Stack._value, new PropertyDescriptor(_callStack, false, false, false));
+                errObj.FastSetProperty(CommonProperties.Stack._value, new DataPropertyDescriptor(_callStack, false, false, false));
             }
         }
 

@@ -85,7 +85,7 @@ internal sealed class JintTaggedTemplateExpression : JintExpression
         }
 
         rawObj.SetIntegrityLevel(ObjectInstance.IntegrityLevel.Frozen);
-        template.DefineOwnProperty(PropertyRaw, new PropertyDescriptor(rawObj, PropertyFlag.OnlyWritable));
+        template.DefineOwnProperty(PropertyRaw, new DataPropertyDescriptor(rawObj, PropertyFlag.OnlyWritable));
 
         template.SetIntegrityLevel(ObjectInstance.IntegrityLevel.Frozen);
 

@@ -18,8 +18,8 @@ namespace Jint.Native.WeakSet
         {
             _prototype = functionPrototype;
             PrototypeObject = new WeakSetPrototype(engine, realm, this, objectPrototype);
-            _length = new PropertyDescriptor(0, PropertyFlag.Configurable);
-            _prototypeDescriptor = new PropertyDescriptor(PrototypeObject, PropertyFlag.AllForbidden);
+            _length = new DataPropertyDescriptor(0, PropertyFlag.Configurable);
+            _prototypeDescriptor = new DataPropertyDescriptor(PrototypeObject, PropertyFlag.AllForbidden);
         }
 
         private WeakSetPrototype PrototypeObject { get; }

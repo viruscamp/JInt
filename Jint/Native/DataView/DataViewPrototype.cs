@@ -34,33 +34,33 @@ namespace Jint.Native.DataView
                 ["buffer"] = new GetSetPropertyDescriptor(new ClrFunctionInstance(_engine, "get buffer", Buffer, 0, lengthFlags), Undefined, PropertyFlag.Configurable),
                 ["byteLength"] = new GetSetPropertyDescriptor(new ClrFunctionInstance(_engine, "get byteLength", ByteLength, 0, lengthFlags), Undefined, PropertyFlag.Configurable),
                 ["byteOffset"] = new GetSetPropertyDescriptor(new ClrFunctionInstance(Engine, "get byteOffset", ByteOffset, 0, lengthFlags), Undefined, PropertyFlag.Configurable),
-                ["constructor"] = new PropertyDescriptor(_constructor, PropertyFlag.NonEnumerable),
-                ["getBigInt64"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "getBigInt64", GetBigInt64, length: 1, lengthFlags), propertyFlags),
-                ["getBigUint64"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "getBigUint64", GetBigUint64, length: 1, lengthFlags), propertyFlags),
-                ["getFloat32"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "getFloat32", GetFloat32, length: 1, lengthFlags), propertyFlags),
-                ["getFloat64"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "getFloat64", GetFloat64, length: 1, lengthFlags), propertyFlags),
-                ["getInt8"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "getInt8", GetInt8, length: 1, lengthFlags), propertyFlags),
-                ["getInt16"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "getInt16", GetInt16, length: 1, lengthFlags), propertyFlags),
-                ["getInt32"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "getInt32", GetInt32, length: 1, lengthFlags), propertyFlags),
-                ["getUint8"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "getUint8", GetUint8, length: 1, lengthFlags), propertyFlags),
-                ["getUint16"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "getUint16", GetUint16, length: 1, lengthFlags), propertyFlags),
-                ["getUint32"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "getUint32", GetUint32, length: 1, lengthFlags), propertyFlags),
-                ["setBigInt64"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "setBigInt64", SetBigInt64, length: 2, lengthFlags), propertyFlags),
-                ["setBigUint64"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "setBigUint64", SetBigUint64, length: 2, lengthFlags), propertyFlags),
-                ["setFloat32"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "setFloat32", SetFloat32, length: 2, lengthFlags), propertyFlags),
-                ["setFloat64"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "setFloat64", SetFloat64, length: 2, lengthFlags), propertyFlags),
-                ["setInt8"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "setInt8", SetInt8, length: 2, lengthFlags), propertyFlags),
-                ["setInt16"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "setInt16", SetInt16, length: 2, lengthFlags), propertyFlags),
-                ["setInt32"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "setInt32", SetInt32, length: 2, lengthFlags), propertyFlags),
-                ["setUint8"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "setUint8", SetUint8, length: 2, lengthFlags), propertyFlags),
-                ["setUint16"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "setUint16", SetUint16, length: 2, lengthFlags), propertyFlags),
-                ["setUint32"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "setUint32", SetUint32, length: 2, lengthFlags), propertyFlags)
+                ["constructor"] = new DataPropertyDescriptor(_constructor, PropertyFlag.NonEnumerable),
+                ["getBigInt64"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "getBigInt64", GetBigInt64, length: 1, lengthFlags), propertyFlags),
+                ["getBigUint64"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "getBigUint64", GetBigUint64, length: 1, lengthFlags), propertyFlags),
+                ["getFloat32"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "getFloat32", GetFloat32, length: 1, lengthFlags), propertyFlags),
+                ["getFloat64"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "getFloat64", GetFloat64, length: 1, lengthFlags), propertyFlags),
+                ["getInt8"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "getInt8", GetInt8, length: 1, lengthFlags), propertyFlags),
+                ["getInt16"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "getInt16", GetInt16, length: 1, lengthFlags), propertyFlags),
+                ["getInt32"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "getInt32", GetInt32, length: 1, lengthFlags), propertyFlags),
+                ["getUint8"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "getUint8", GetUint8, length: 1, lengthFlags), propertyFlags),
+                ["getUint16"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "getUint16", GetUint16, length: 1, lengthFlags), propertyFlags),
+                ["getUint32"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "getUint32", GetUint32, length: 1, lengthFlags), propertyFlags),
+                ["setBigInt64"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "setBigInt64", SetBigInt64, length: 2, lengthFlags), propertyFlags),
+                ["setBigUint64"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "setBigUint64", SetBigUint64, length: 2, lengthFlags), propertyFlags),
+                ["setFloat32"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "setFloat32", SetFloat32, length: 2, lengthFlags), propertyFlags),
+                ["setFloat64"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "setFloat64", SetFloat64, length: 2, lengthFlags), propertyFlags),
+                ["setInt8"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "setInt8", SetInt8, length: 2, lengthFlags), propertyFlags),
+                ["setInt16"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "setInt16", SetInt16, length: 2, lengthFlags), propertyFlags),
+                ["setInt32"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "setInt32", SetInt32, length: 2, lengthFlags), propertyFlags),
+                ["setUint8"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "setUint8", SetUint8, length: 2, lengthFlags), propertyFlags),
+                ["setUint16"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "setUint16", SetUint16, length: 2, lengthFlags), propertyFlags),
+                ["setUint32"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "setUint32", SetUint32, length: 2, lengthFlags), propertyFlags)
             };
             SetProperties(properties);
 
             var symbols = new SymbolDictionary(1)
             {
-                [GlobalSymbolRegistry.ToStringTag] = new PropertyDescriptor("DataView", PropertyFlag.Configurable)
+                [GlobalSymbolRegistry.ToStringTag] = new DataPropertyDescriptor("DataView", PropertyFlag.Configurable)
             };
             SetSymbols(symbols);
         }

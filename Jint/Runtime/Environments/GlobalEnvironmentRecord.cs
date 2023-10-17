@@ -345,7 +345,7 @@ namespace Jint.Runtime.Environments
             Key key = name;
             if (!_global._properties!.ContainsKey(key) && _global.Extensible)
             {
-                _global._properties[key] = new PropertyDescriptor(Undefined, canBeDeleted
+                _global._properties[key] = new DataPropertyDescriptor(Undefined, canBeDeleted
                     ? PropertyFlag.ConfigurableEnumerableWritable | PropertyFlag.MutableBinding
                     : PropertyFlag.NonConfigurable | PropertyFlag.MutableBinding);
             }
@@ -364,11 +364,11 @@ namespace Jint.Runtime.Environments
             PropertyDescriptor desc;
             if (existingProp == PropertyDescriptor.Undefined || existingProp.Configurable)
             {
-                desc = new PropertyDescriptor(value, true, true, canBeDeleted);
+                desc = new DataPropertyDescriptor(value, true, true, canBeDeleted);
             }
             else
             {
-                desc = new PropertyDescriptor(value, PropertyFlag.None);
+                desc = new DataPropertyDescriptor(value, PropertyFlag.None);
             }
 
             _global.DefinePropertyOrThrow(jsString, desc);

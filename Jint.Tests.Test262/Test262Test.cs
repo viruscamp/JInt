@@ -30,7 +30,7 @@ public abstract partial class Test262Test
         engine.SetValue("print", new ClrFunctionInstance(engine, "print", (_, args) => TypeConverter.ToString(args.At(0))));
 
         var o = engine.Realm.Intrinsics.Object.Construct(Arguments.Empty);
-        o.FastSetProperty("evalScript", new PropertyDescriptor(new ClrFunctionInstance(engine, "evalScript",
+        o.FastSetProperty("evalScript", new DataPropertyDescriptor(new ClrFunctionInstance(engine, "evalScript",
             (_, args) =>
             {
                 if (args.Length > 1)
@@ -45,7 +45,7 @@ public abstract partial class Test262Test
                 return engine.Evaluate(script);
             }), true, true, true));
 
-        o.FastSetProperty("createRealm", new PropertyDescriptor(new ClrFunctionInstance(engine, "createRealm",
+        o.FastSetProperty("createRealm", new DataPropertyDescriptor(new ClrFunctionInstance(engine, "createRealm",
             (_, args) =>
             {
                 var realm = engine._host.CreateRealm();
@@ -53,7 +53,7 @@ public abstract partial class Test262Test
                 return realm.GlobalObject;
             }), true, true, true));
 
-        o.FastSetProperty("detachArrayBuffer", new PropertyDescriptor(new ClrFunctionInstance(engine, "detachArrayBuffer",
+        o.FastSetProperty("detachArrayBuffer", new DataPropertyDescriptor(new ClrFunctionInstance(engine, "detachArrayBuffer",
             (_, args) =>
             {
                 var buffer = (JsArrayBuffer) args.At(0);
@@ -61,7 +61,7 @@ public abstract partial class Test262Test
                 return JsValue.Undefined;
             }), true, true, true));
 
-        o.FastSetProperty("gc", new PropertyDescriptor(new ClrFunctionInstance(engine, "gc",
+        o.FastSetProperty("gc", new DataPropertyDescriptor(new ClrFunctionInstance(engine, "gc",
             (_, _) =>
             {
                 GC.Collect();

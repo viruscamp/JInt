@@ -7,42 +7,27 @@ using Jint.Native.Object;
 namespace Jint.Runtime.Descriptors
 {
     [DebuggerDisplay("Value: {Value}, Flags: {Flags}")]
-    public class PropertyDescriptor
+    public abstract class PropertyDescriptor
     {
         public static readonly PropertyDescriptor Undefined = new UndefinedPropertyDescriptor();
 
         internal PropertyFlag _flags;
         internal JsValue? _value;
 
-        public PropertyDescriptor() : this(PropertyFlag.None)
+
+        protected PropertyDescriptor() : this(PropertyFlag.None)
         {
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected PropertyDescriptor(PropertyFlag flags)
         {
-            _flags = flags & ~PropertyFlag.NonData;
+            _flags = flags;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        protected internal PropertyDescriptor(JsValue? value, PropertyFlag flags) : this(flags)
+        protected PropertyDescriptor(bool? writable, bool? enumerable, bool? configurable)
         {
-            if ((_flags & PropertyFlag.CustomJsValue) != 0)
-            {
-                CustomValue = value;
-            }
-            _value = value;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public PropertyDescriptor(JsValue? value, bool? writable, bool? enumerable, bool? configurable)
-        {
-            if ((_flags & PropertyFlag.CustomJsValue) != 0)
-            {
-                CustomValue = value;
-            }
-            _value = value;
-
             if (writable != null)
             {
                 Writable = writable.Value;
@@ -62,10 +47,8 @@ namespace Jint.Runtime.Descriptors
             }
         }
 
-        public PropertyDescriptor(PropertyDescriptor descriptor)
+        protected PropertyDescriptor(PropertyDescriptor descriptor)
         {
-            Value = descriptor.Value;
-
             Enumerable = descriptor.Enumerable;
             EnumerableSet = descriptor.EnumerableSet;
 
@@ -190,34 +173,7 @@ namespace Jint.Runtime.Descriptors
             }
         }
 
-        public JsValue Value
-        {
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get
-            {
-                if ((_flags & PropertyFlag.CustomJsValue) != 0)
-                {
-                    return CustomValue!;
-                }
-
-                return _value!;
-            }
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            set
-            {
-                if ((_flags & PropertyFlag.CustomJsValue) != 0)
-                {
-                    CustomValue = value;
-                }
-                _value = value;
-            }
-        }
-
-        protected internal virtual JsValue? CustomValue
-        {
-            get => null;
-            set => ExceptionHelper.ThrowNotImplementedException();
-        }
+        public abstract JsValue Value { get; set; }
 
         internal PropertyFlag Flags
         {
@@ -283,9 +239,9 @@ namespace Jint.Runtime.Descriptors
                 ExceptionHelper.ThrowTypeError(realm, "Invalid property descriptor. Cannot both specify accessors and a value or writable attribute");
             }
 
-            var desc = hasGet || hasSet
+            PropertyDescriptor desc = hasGet || hasSet
                 ? new GetSetPropertyDescriptor(null, null, PropertyFlag.None)
-                : new PropertyDescriptor(PropertyFlag.None);
+                : new DataPropertyDescriptor(PropertyFlag.None);
 
             if (hasEnumerable)
             {
@@ -357,26 +313,26 @@ namespace Jint.Runtime.Descriptors
 
             if (desc.IsDataDescriptor())
             {
-                properties["value"] = new PropertyDescriptor(desc.Value ?? JsValue.Undefined, PropertyFlag.ConfigurableEnumerableWritable);
+                properties["value"] = new DataPropertyDescriptor(desc.Value ?? JsValue.Undefined, PropertyFlag.ConfigurableEnumerableWritable);
                 if (desc._flags != PropertyFlag.None || desc.WritableSet)
                 {
-                    properties["writable"] = new PropertyDescriptor(desc.Writable, PropertyFlag.ConfigurableEnumerableWritable);
+                    properties["writable"] = new DataPropertyDescriptor(desc.Writable, PropertyFlag.ConfigurableEnumerableWritable);
                 }
             }
-            else
+            else if (desc is INonData)
             {
-                properties["get"] = new PropertyDescriptor(desc.Get ?? JsValue.Undefined, PropertyFlag.ConfigurableEnumerableWritable);
-                properties["set"] = new PropertyDescriptor(desc.Set ?? JsValue.Undefined, PropertyFlag.ConfigurableEnumerableWritable);
+                properties["get"] = new DataPropertyDescriptor(desc.Get ?? JsValue.Undefined, PropertyFlag.ConfigurableEnumerableWritable);
+                properties["set"] = new DataPropertyDescriptor(desc.Set ?? JsValue.Undefined, PropertyFlag.ConfigurableEnumerableWritable);
             }
 
             if (!strictUndefined || desc.EnumerableSet)
             {
-                properties["enumerable"] = new PropertyDescriptor(desc.Enumerable, PropertyFlag.ConfigurableEnumerableWritable);
+                properties["enumerable"] = new DataPropertyDescriptor(desc.Enumerable, PropertyFlag.ConfigurableEnumerableWritable);
             }
 
             if (!strictUndefined || desc.ConfigurableSet)
             {
-                properties["configurable"] = new PropertyDescriptor(desc.Configurable, PropertyFlag.ConfigurableEnumerableWritable);
+                properties["configurable"] = new DataPropertyDescriptor(desc.Configurable, PropertyFlag.ConfigurableEnumerableWritable);
             }
 
             obj.SetProperties(properties);
@@ -386,19 +342,22 @@ namespace Jint.Runtime.Descriptors
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool IsAccessorDescriptor()
         {
-            return !ReferenceEquals(Get, null) || !ReferenceEquals(Set, null);
+            if (this is INonData)
+            {
+                return !ReferenceEquals(Get, null) || !ReferenceEquals(Set, null);
+            }
+            return false;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool IsDataDescriptor()
         {
-            if (_flags.HasFlag(PropertyFlag.NonData))
+            if (this is INonData)
             {
                 return false;
             }
             return (_flags & (PropertyFlag.WritableSet | PropertyFlag.Writable)) != 0
-                   || (_flags & PropertyFlag.CustomJsValue) != 0 && !ReferenceEquals(CustomValue, null)
-                   || !ReferenceEquals(_value, null);
+                   || !ReferenceEquals(Value, null);
         }
 
         /// <summary>
@@ -419,9 +378,7 @@ namespace Jint.Runtime.Descriptors
             // IsDataDescriptor logic inlined
             if ((_flags & (PropertyFlag.WritableSet | PropertyFlag.Writable)) != 0)
             {
-                var val = (_flags & PropertyFlag.CustomJsValue) != 0
-                    ? CustomValue
-                    : _value;
+                var val = Value;
 
                 if (!ReferenceEquals(val, null))
                 {
@@ -448,12 +405,13 @@ namespace Jint.Runtime.Descriptors
 
         private sealed class UndefinedPropertyDescriptor : PropertyDescriptor
         {
-            public UndefinedPropertyDescriptor() : base(PropertyFlag.None | PropertyFlag.CustomJsValue)
+            public UndefinedPropertyDescriptor() : base(PropertyFlag.None)
             {
             }
 
-            protected internal override JsValue? CustomValue
+            public override JsValue Value
             {
+                get => JsValue.Undefined;
                 set => ExceptionHelper.ThrowInvalidOperationException("making changes to undefined property's descriptor is not allowed");
             }
         }
@@ -477,6 +435,13 @@ namespace Jint.Runtime.Descriptors
                 }
             }
 
+            public override JsValue Value
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                get => _value!;
+                set => ExceptionHelper.ThrowNotImplementedException();
+            }
+
             private AllForbiddenDescriptor(JsValue value)
                 : base(PropertyFlag.AllForbidden)
             {
@@ -488,8 +453,48 @@ namespace Jint.Runtime.Descriptors
                 var temp = _cache;
                 return (uint) number < temp.Length
                     ? temp[number]
-                    : new PropertyDescriptor(number, PropertyFlag.AllForbidden);
+                    : new DataPropertyDescriptor(number, PropertyFlag.AllForbidden);
             }
+        }
+    }
+
+    public sealed class DataPropertyDescriptor : PropertyDescriptor
+    {
+        public DataPropertyDescriptor() : this(PropertyFlag.None)
+        {
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal DataPropertyDescriptor(PropertyFlag flags) : base(flags)
+        {
+            _flags = flags;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal DataPropertyDescriptor(JsValue? value, PropertyFlag flags) : base(flags)
+        {
+            _value = value!;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public DataPropertyDescriptor(JsValue? value, bool? writable, bool? enumerable, bool? configurable)
+            : base(writable, enumerable, configurable)
+        {
+            _value = value!;
+        }
+
+        public DataPropertyDescriptor(PropertyDescriptor descriptor)
+            : base(descriptor)
+        {
+            _value = descriptor.Value;
+        }
+
+        public override JsValue Value
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _value!;
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            set => _value = value;
         }
     }
 }

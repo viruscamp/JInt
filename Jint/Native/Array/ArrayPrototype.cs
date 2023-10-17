@@ -28,7 +28,7 @@ namespace Jint.Native.Array
             ObjectPrototype objectPrototype) : base(engine, InternalTypes.Object)
         {
             _prototype = objectPrototype;
-            _length = new PropertyDescriptor(JsNumber.PositiveZero, PropertyFlag.Writable);
+            _length = new DataPropertyDescriptor(JsNumber.PositiveZero, PropertyFlag.Writable);
             _realm = realm;
             _constructor = arrayConstructor;
         }
@@ -38,53 +38,53 @@ namespace Jint.Native.Array
             const PropertyFlag PropertyFlags = PropertyFlag.Writable | PropertyFlag.Configurable;
             var properties = new PropertyDictionary(38, checkExistingKeys: false)
             {
-                ["constructor"] = new PropertyDescriptor(_constructor, PropertyFlag.NonEnumerable),
+                ["constructor"] = new DataPropertyDescriptor(_constructor, PropertyFlag.NonEnumerable),
 
-                ["at"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "at", At, 1, PropertyFlag.Configurable), PropertyFlags),
-                ["concat"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "concat", Concat, 1, PropertyFlag.Configurable), PropertyFlags),
-                ["copyWithin"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "copyWithin", CopyWithin, 2, PropertyFlag.Configurable), PropertyFlags),
-                ["entries"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "entries", Entries, 0, PropertyFlag.Configurable), PropertyFlags),
-                ["every"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "every", Every, 1, PropertyFlag.Configurable), PropertyFlags),
-                ["fill"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "fill", Fill, 1, PropertyFlag.Configurable), PropertyFlags),
-                ["filter"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "filter", Filter, 1, PropertyFlag.Configurable), PropertyFlags),
-                ["find"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "find", Find, 1, PropertyFlag.Configurable), PropertyFlags),
-                ["findIndex"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "findIndex", FindIndex, 1, PropertyFlag.Configurable), PropertyFlags),
-                ["findLast"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "findLast", FindLast, 1, PropertyFlag.Configurable), PropertyFlags),
-                ["findLastIndex"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "findLastIndex", FindLastIndex, 1, PropertyFlag.Configurable), PropertyFlags),
-                ["flat"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "flat", Flat, 0, PropertyFlag.Configurable), PropertyFlags),
-                ["flatMap"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "flatMap", FlatMap, 1, PropertyFlag.Configurable), PropertyFlags),
-                ["forEach"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "forEach", ForEach, 1, PropertyFlag.Configurable), PropertyFlags),
-                ["includes"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "includes", Includes, 1, PropertyFlag.Configurable), PropertyFlags),
-                ["indexOf"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "indexOf", IndexOf, 1, PropertyFlag.Configurable), PropertyFlags),
-                ["join"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "join", Join, 1, PropertyFlag.Configurable), PropertyFlags),
-                ["keys"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "keys", Keys, 0, PropertyFlag.Configurable), PropertyFlags),
-                ["lastIndexOf"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "lastIndexOf", LastIndexOf, 1, PropertyFlag.Configurable), PropertyFlags),
-                ["map"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "map", Map, 1, PropertyFlag.Configurable), PropertyFlags),
-                ["pop"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "pop", Pop, 0, PropertyFlag.Configurable), PropertyFlags),
-                ["push"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "push", Push, 1, PropertyFlag.Configurable), PropertyFlags),
-                ["reduce"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "reduce", Reduce, 1, PropertyFlag.Configurable), PropertyFlags),
-                ["reduceRight"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "reduceRight", ReduceRight, 1, PropertyFlag.Configurable), PropertyFlags),
-                ["reverse"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "reverse", Reverse, 0, PropertyFlag.Configurable), PropertyFlags),
-                ["shift"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "shift", Shift, 0, PropertyFlag.Configurable), PropertyFlags),
-                ["slice"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "slice", Slice, 2, PropertyFlag.Configurable), PropertyFlags),
-                ["some"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "some", Some, 1, PropertyFlag.Configurable), PropertyFlags),
-                ["sort"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "sort", Sort, 1, PropertyFlag.Configurable), PropertyFlags),
-                ["splice"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "splice", Splice, 2, PropertyFlag.Configurable), PropertyFlags),
-                ["toLocaleString"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "toLocaleString", ToLocaleString, 0, PropertyFlag.Configurable), PropertyFlags),
-                ["toReversed"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "toReversed", ToReversed, 0, PropertyFlag.Configurable), PropertyFlags),
-                ["toSorted"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "toSorted", ToSorted, 1, PropertyFlag.Configurable), PropertyFlags),
-                ["toSpliced"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "toSpliced", ToSpliced, 2, PropertyFlag.Configurable), PropertyFlags),
-                ["toString"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "toString", ToString, 0, PropertyFlag.Configurable), PropertyFlags),
-                ["unshift"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "unshift", Unshift, 1, PropertyFlag.Configurable), PropertyFlags),
-                ["values"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "values", Values, 0, PropertyFlag.Configurable), PropertyFlags),
-                ["with"] = new PropertyDescriptor(new ClrFunctionInstance(Engine, "with", With, 2, PropertyFlag.Configurable), PropertyFlags),
+                ["at"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "at", At, 1, PropertyFlag.Configurable), PropertyFlags),
+                ["concat"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "concat", Concat, 1, PropertyFlag.Configurable), PropertyFlags),
+                ["copyWithin"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "copyWithin", CopyWithin, 2, PropertyFlag.Configurable), PropertyFlags),
+                ["entries"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "entries", Entries, 0, PropertyFlag.Configurable), PropertyFlags),
+                ["every"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "every", Every, 1, PropertyFlag.Configurable), PropertyFlags),
+                ["fill"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "fill", Fill, 1, PropertyFlag.Configurable), PropertyFlags),
+                ["filter"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "filter", Filter, 1, PropertyFlag.Configurable), PropertyFlags),
+                ["find"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "find", Find, 1, PropertyFlag.Configurable), PropertyFlags),
+                ["findIndex"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "findIndex", FindIndex, 1, PropertyFlag.Configurable), PropertyFlags),
+                ["findLast"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "findLast", FindLast, 1, PropertyFlag.Configurable), PropertyFlags),
+                ["findLastIndex"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "findLastIndex", FindLastIndex, 1, PropertyFlag.Configurable), PropertyFlags),
+                ["flat"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "flat", Flat, 0, PropertyFlag.Configurable), PropertyFlags),
+                ["flatMap"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "flatMap", FlatMap, 1, PropertyFlag.Configurable), PropertyFlags),
+                ["forEach"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "forEach", ForEach, 1, PropertyFlag.Configurable), PropertyFlags),
+                ["includes"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "includes", Includes, 1, PropertyFlag.Configurable), PropertyFlags),
+                ["indexOf"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "indexOf", IndexOf, 1, PropertyFlag.Configurable), PropertyFlags),
+                ["join"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "join", Join, 1, PropertyFlag.Configurable), PropertyFlags),
+                ["keys"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "keys", Keys, 0, PropertyFlag.Configurable), PropertyFlags),
+                ["lastIndexOf"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "lastIndexOf", LastIndexOf, 1, PropertyFlag.Configurable), PropertyFlags),
+                ["map"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "map", Map, 1, PropertyFlag.Configurable), PropertyFlags),
+                ["pop"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "pop", Pop, 0, PropertyFlag.Configurable), PropertyFlags),
+                ["push"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "push", Push, 1, PropertyFlag.Configurable), PropertyFlags),
+                ["reduce"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "reduce", Reduce, 1, PropertyFlag.Configurable), PropertyFlags),
+                ["reduceRight"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "reduceRight", ReduceRight, 1, PropertyFlag.Configurable), PropertyFlags),
+                ["reverse"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "reverse", Reverse, 0, PropertyFlag.Configurable), PropertyFlags),
+                ["shift"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "shift", Shift, 0, PropertyFlag.Configurable), PropertyFlags),
+                ["slice"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "slice", Slice, 2, PropertyFlag.Configurable), PropertyFlags),
+                ["some"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "some", Some, 1, PropertyFlag.Configurable), PropertyFlags),
+                ["sort"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "sort", Sort, 1, PropertyFlag.Configurable), PropertyFlags),
+                ["splice"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "splice", Splice, 2, PropertyFlag.Configurable), PropertyFlags),
+                ["toLocaleString"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "toLocaleString", ToLocaleString, 0, PropertyFlag.Configurable), PropertyFlags),
+                ["toReversed"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "toReversed", ToReversed, 0, PropertyFlag.Configurable), PropertyFlags),
+                ["toSorted"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "toSorted", ToSorted, 1, PropertyFlag.Configurable), PropertyFlags),
+                ["toSpliced"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "toSpliced", ToSpliced, 2, PropertyFlag.Configurable), PropertyFlags),
+                ["toString"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "toString", ToString, 0, PropertyFlag.Configurable), PropertyFlags),
+                ["unshift"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "unshift", Unshift, 1, PropertyFlag.Configurable), PropertyFlags),
+                ["values"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "values", Values, 0, PropertyFlag.Configurable), PropertyFlags),
+                ["with"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "with", With, 2, PropertyFlag.Configurable), PropertyFlags),
             };
             SetProperties(properties);
 
             _originalIteratorFunction = new ClrFunctionInstance(Engine, "iterator", Values, 1);
             var symbols = new SymbolDictionary(2)
             {
-                [GlobalSymbolRegistry.Iterator] = new PropertyDescriptor(_originalIteratorFunction, PropertyFlags),
+                [GlobalSymbolRegistry.Iterator] = new DataPropertyDescriptor(_originalIteratorFunction, PropertyFlags),
                 [GlobalSymbolRegistry.Unscopables] = new LazyPropertyDescriptor(_engine, static state =>
                 {
                     var unscopables = new JsObject((Engine) state!)
@@ -1364,7 +1364,7 @@ namespace Jint.Native.Array
 
             // this is not in the specs, but is necessary in case the last element of the last
             // array doesn't exist, and thus the length would not be incremented
-            a.DefineOwnProperty(CommonProperties.Length, new PropertyDescriptor(n, PropertyFlag.OnlyWritable));
+            a.DefineOwnProperty(CommonProperties.Length, new DataPropertyDescriptor(n, PropertyFlag.OnlyWritable));
 
             return a;
         }

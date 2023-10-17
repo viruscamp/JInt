@@ -103,7 +103,7 @@ namespace Jint.Native.TypedArray
                     return PropertyDescriptor.Undefined;
                 }
 
-                return new PropertyDescriptor(value, PropertyFlag.ConfigurableEnumerableWritable);
+                return new DataPropertyDescriptor(value, PropertyFlag.ConfigurableEnumerableWritable);
             }
 
             return base.GetOwnProperty(property);

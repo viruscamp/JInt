@@ -20,8 +20,8 @@ internal sealed class DateTimeFormatConstructor : Constructor
     {
         _prototype = functionPrototype;
         PrototypeObject = new DateTimeFormatPrototype(engine, realm, this, objectPrototype);
-        _length = new PropertyDescriptor(JsNumber.PositiveZero, PropertyFlag.Configurable);
-        _prototypeDescriptor = new PropertyDescriptor(PrototypeObject, PropertyFlag.AllForbidden);
+        _length = new DataPropertyDescriptor(JsNumber.PositiveZero, PropertyFlag.Configurable);
+        _prototypeDescriptor = new DataPropertyDescriptor(PrototypeObject, PropertyFlag.AllForbidden);
     }
 
     public DateTimeFormatPrototype PrototypeObject { get; }

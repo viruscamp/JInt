@@ -41,7 +41,7 @@ namespace Jint.Native.Array
                 _sparse = new Dictionary<uint, PropertyDescriptor?>(1024);
             }
 
-            _length = new PropertyDescriptor(length, PropertyFlag.OnlyWritable);
+            _length = new DataPropertyDescriptor(length, PropertyFlag.OnlyWritable);
         }
 
         private protected ArrayInstance(Engine engine, JsValue[] items) : base(engine, type: InternalTypes.Object | InternalTypes.Array)
@@ -49,7 +49,7 @@ namespace Jint.Native.Array
             InitializePrototypeAndValidateCapacity(engine, capacity: 0);
 
             _dense = items;
-            _length = new PropertyDescriptor(items.Length, PropertyFlag.OnlyWritable);
+            _length = new DataPropertyDescriptor(items.Length, PropertyFlag.OnlyWritable);
         }
 
         private void InitializePrototypeAndValidateCapacity(Engine engine, uint capacity)
@@ -132,7 +132,7 @@ namespace Jint.Native.Array
                 return base.DefineOwnProperty(CommonProperties.Length, desc);
             }
 
-            var newLenDesc = new PropertyDescriptor(desc);
+            var newLenDesc = new DataPropertyDescriptor(desc);
             uint newLen = TypeConverter.ToUint32(value);
             if (newLen != TypeConverter.ToNumber(value))
             {
@@ -252,7 +252,7 @@ namespace Jint.Native.Array
 
             if (!newWritable)
             {
-                base.DefineOwnProperty(CommonProperties.Length, new PropertyDescriptor(value: null, PropertyFlag.WritableSet));
+                base.DefineOwnProperty(CommonProperties.Length, new DataPropertyDescriptor(value: null, PropertyFlag.WritableSet));
             }
 
             return true;
@@ -385,7 +385,7 @@ namespace Jint.Native.Array
                         if (_sparse is null || !_sparse.TryGetValue(i, out var descriptor) || descriptor is null)
                         {
                             _sparse ??= new Dictionary<uint, PropertyDescriptor?>();
-                            _sparse[i] = descriptor = new PropertyDescriptor(value, PropertyFlag.ConfigurableEnumerableWritable);
+                            _sparse[i] = descriptor = new DataPropertyDescriptor(value, PropertyFlag.ConfigurableEnumerableWritable);
                         }
                         yield return new KeyValuePair<JsValue, PropertyDescriptor>(TypeConverter.ToString(i), descriptor);
                     }
@@ -454,7 +454,7 @@ namespace Jint.Native.Array
             if (property == CommonProperties.Length)
             {
                 var length = _length?._value;
-                if (length is not null)
+                if (length is not null && !length.IsUndefined())
                 {
                     return length;
                 }
@@ -755,7 +755,7 @@ namespace Jint.Native.Array
                                 return false;
                             }
                             _sparse ??= new Dictionary<uint, PropertyDescriptor?>();
-                            _sparse[index] = descriptor = new PropertyDescriptor(value, PropertyFlag.ConfigurableEnumerableWritable);
+                            _sparse[index] = descriptor = new DataPropertyDescriptor(value, PropertyFlag.ConfigurableEnumerableWritable);
                         }
 
                         descriptor.Value = value;
@@ -896,7 +896,7 @@ namespace Jint.Native.Array
             else
             {
                 ConvertToSparse();
-                _sparse![index] = new PropertyDescriptor(value, PropertyFlag.ConfigurableEnumerableWritable);
+                _sparse![index] = new DataPropertyDescriptor(value, PropertyFlag.ConfigurableEnumerableWritable);
             }
         }
 
@@ -927,7 +927,7 @@ namespace Jint.Native.Array
                 if (value != null)
                 {
                     _sparse.TryGetValue(i, out var descriptor);
-                    descriptor ??= new PropertyDescriptor(value, PropertyFlag.ConfigurableEnumerableWritable);
+                    descriptor ??= new DataPropertyDescriptor(value, PropertyFlag.ConfigurableEnumerableWritable);
                     descriptor.Value = value;
                     _sparse[i] = descriptor;
                 }
@@ -1096,7 +1096,7 @@ namespace Jint.Native.Array
                 }
                 else
                 {
-                    DefineOwnProperty(n, new PropertyDescriptor(argument, PropertyFlag.ConfigurableEnumerableWritable));
+                    DefineOwnProperty(n, new DataPropertyDescriptor(argument, PropertyFlag.ConfigurableEnumerableWritable));
                 }
 
                 n++;
@@ -1137,7 +1137,7 @@ namespace Jint.Native.Array
             }
             else
             {
-                DefinePropertyOrThrow((uint) n, new PropertyDescriptor(value, PropertyFlag.ConfigurableEnumerableWritable));
+                DefinePropertyOrThrow((uint) n, new DataPropertyDescriptor(value, PropertyFlag.ConfigurableEnumerableWritable));
             }
         }
 

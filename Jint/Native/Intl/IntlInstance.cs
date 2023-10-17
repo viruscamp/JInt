@@ -28,22 +28,22 @@ internal sealed class IntlInstance : ObjectInstance
         // TODO check length
         var properties = new PropertyDictionary(10, checkExistingKeys: false)
         {
-            ["Collator"] = new(_realm.Intrinsics.Collator, false, false, true),
-            ["DateTimeFormat"] = new(_realm.Intrinsics.DateTimeFormat, false, false, true),
-            ["DisplayNames"] = new(_realm.Intrinsics.DisplayNames, false, false, true),
-            ["ListFormat"] = new(_realm.Intrinsics.ListFormat, false, false, true),
-            ["Locale"] = new(_realm.Intrinsics.Locale, false, false, true),
-            ["NumberFormat"] = new(_realm.Intrinsics.NumberFormat, false, false, true),
-            ["PluralRules"] = new(_realm.Intrinsics.PluralRules, false, false, true),
-            ["RelativeTimeFormat"] = new(_realm.Intrinsics.RelativeTimeFormat, false, false, true),
-            ["Segmenter"] = new(_realm.Intrinsics.Segmenter, false, false, true),
-            ["getCanonicalLocales "] = new(new ClrFunctionInstance(Engine, "getCanonicalLocales ", GetCanonicalLocales , 1, PropertyFlag.Configurable), true, false, true),
+            ["Collator"] = new DataPropertyDescriptor(_realm.Intrinsics.Collator, false, false, true),
+            ["DateTimeFormat"] = new DataPropertyDescriptor(_realm.Intrinsics.DateTimeFormat, false, false, true),
+            ["DisplayNames"] = new DataPropertyDescriptor(_realm.Intrinsics.DisplayNames, false, false, true),
+            ["ListFormat"] = new DataPropertyDescriptor(_realm.Intrinsics.ListFormat, false, false, true),
+            ["Locale"] = new DataPropertyDescriptor(_realm.Intrinsics.Locale, false, false, true),
+            ["NumberFormat"] = new DataPropertyDescriptor(_realm.Intrinsics.NumberFormat, false, false, true),
+            ["PluralRules"] = new DataPropertyDescriptor(_realm.Intrinsics.PluralRules, false, false, true),
+            ["RelativeTimeFormat"] = new DataPropertyDescriptor(_realm.Intrinsics.RelativeTimeFormat, false, false, true),
+            ["Segmenter"] = new DataPropertyDescriptor(_realm.Intrinsics.Segmenter, false, false, true),
+            ["getCanonicalLocales"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "getCanonicalLocales", GetCanonicalLocales, 1, PropertyFlag.Configurable), true, false, true),
         };
         SetProperties(properties);
 
         var symbols = new SymbolDictionary(1)
         {
-            [GlobalSymbolRegistry.ToStringTag] = new("Intl", PropertyFlag.Configurable)
+            [GlobalSymbolRegistry.ToStringTag] = new DataPropertyDescriptor("Intl", PropertyFlag.Configurable)
         };
         SetSymbols(symbols);
     }

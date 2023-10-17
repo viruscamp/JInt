@@ -11,13 +11,8 @@ namespace Jint.Runtime.Descriptors
         Configurable = 16,
         ConfigurableSet = 32,
 
-        CustomJsValue = 256,
-
         // we can check for mutable binding and do some fast assignments
         MutableBinding = 512,
-
-        // mark PropertyDescriptor as non data to accelerate IsDataDescriptor and avoid the side effect of CustomValue
-        NonData = 1024,
 
         // common helpers
         AllForbidden = ConfigurableSet | EnumerableSet | WritableSet,

@@ -211,7 +211,7 @@ namespace Jint
         /// </summary>
         public Engine SetValue(string name, Delegate value)
         {
-            Realm.GlobalObject.FastSetProperty(name, new PropertyDescriptor(new DelegateWrapper(this, value), true, false, true));
+            Realm.GlobalObject.FastSetProperty(name, new DataPropertyDescriptor(new DelegateWrapper(this, value), true, false, true));
             return this;
         }
 
@@ -426,7 +426,7 @@ namespace Jint
                 // TODO what about callstack and thrown exceptions?
                 RunAvailableContinuations();
 
-               return this;
+                return this;
             }
             finally
             {
@@ -1245,7 +1245,7 @@ namespace Jint
             {
                 foreach (var name in pointer.Names)
                 {
-                    privateIdentifiers??= new HashSet<PrivateIdentifier>(PrivateIdentifierNameComparer._instance);
+                    privateIdentifiers ??= new HashSet<PrivateIdentifier>(PrivateIdentifierNameComparer._instance);
                     privateIdentifiers.Add(name.Key);
                 }
 

@@ -26,8 +26,8 @@ namespace Jint.Native.ArrayBuffer
         {
             _prototype = functionPrototype;
             PrototypeObject = new ArrayBufferPrototype(engine, this, objectPrototype);
-            _length = new PropertyDescriptor(1, PropertyFlag.Configurable);
-            _prototypeDescriptor = new PropertyDescriptor(PrototypeObject, PropertyFlag.AllForbidden);
+            _length = new DataPropertyDescriptor(1, PropertyFlag.Configurable);
+            _prototypeDescriptor = new DataPropertyDescriptor(PrototypeObject, PropertyFlag.AllForbidden);
         }
 
         private ArrayBufferPrototype PrototypeObject { get; }
@@ -37,7 +37,7 @@ namespace Jint.Native.ArrayBuffer
             const PropertyFlag lengthFlags = PropertyFlag.Configurable;
             var properties = new PropertyDictionary(1, checkExistingKeys: false)
             {
-                ["isView"] = new PropertyDescriptor(new PropertyDescriptor(new ClrFunctionInstance(Engine, "isView", IsView, 1, lengthFlags), PropertyFlag.Configurable | PropertyFlag.Writable)),
+                ["isView"] = new DataPropertyDescriptor(new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "isView", IsView, 1, lengthFlags), PropertyFlag.Configurable | PropertyFlag.Writable)),
             };
             SetProperties(properties);
 

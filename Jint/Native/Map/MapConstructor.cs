@@ -22,8 +22,8 @@ internal sealed class MapConstructor : Constructor
     {
         _prototype = functionPrototype;
         PrototypeObject = new MapPrototype(engine, realm, this, objectPrototype);
-        _length = new PropertyDescriptor(0, PropertyFlag.Configurable);
-        _prototypeDescriptor = new PropertyDescriptor(PrototypeObject, PropertyFlag.AllForbidden);
+        _length = new DataPropertyDescriptor(0, PropertyFlag.Configurable);
+        _prototypeDescriptor = new DataPropertyDescriptor(PrototypeObject, PropertyFlag.AllForbidden);
     }
 
     private MapPrototype PrototypeObject { get; }
@@ -33,7 +33,7 @@ internal sealed class MapConstructor : Constructor
         const PropertyFlag PropertyFlags = PropertyFlag.Writable | PropertyFlag.Configurable;
         var properties = new PropertyDictionary(1, checkExistingKeys: false)
         {
-            ["groupBy"] = new(new ClrFunctionInstance(Engine, "groupBy", GroupBy, 2, PropertyFlag.Configurable), PropertyFlags),
+            ["groupBy"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "groupBy", GroupBy, 2, PropertyFlag.Configurable), PropertyFlags),
         };
         SetProperties(properties);
 

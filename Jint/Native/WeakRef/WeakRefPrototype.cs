@@ -29,14 +29,14 @@ internal sealed class WeakRefPrototype : Prototype
         const PropertyFlag propertyFlags = PropertyFlag.Configurable | PropertyFlag.Writable;
         var properties = new PropertyDictionary(5, checkExistingKeys: false)
         {
-            ["constructor"] = new(_constructor, PropertyFlag.NonEnumerable),
-            ["deref"] = new(new ClrFunctionInstance(Engine, "deref", Deref, 0, PropertyFlag.Configurable), propertyFlags)
+            ["constructor"] = new DataPropertyDescriptor(_constructor, PropertyFlag.NonEnumerable),
+            ["deref"] = new DataPropertyDescriptor(new ClrFunctionInstance(Engine, "deref", Deref, 0, PropertyFlag.Configurable), propertyFlags)
         };
         SetProperties(properties);
 
         var symbols = new SymbolDictionary(1)
         {
-            [GlobalSymbolRegistry.ToStringTag] = new("WeakRef", false, false, true)
+            [GlobalSymbolRegistry.ToStringTag] = new DataPropertyDescriptor("WeakRef", false, false, true)
         };
         SetSymbols(symbols);
     }
