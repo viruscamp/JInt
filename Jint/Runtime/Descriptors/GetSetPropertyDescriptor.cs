@@ -34,12 +34,6 @@ namespace Jint.Runtime.Descriptors
         public override JsValue? Get => _get;
         public override JsValue? Set => _set;
 
-        public override JsValue Value
-        {
-            get => JsValue.Undefined;
-            set { }
-        }
-
         internal void SetGet(JsValue getter)
         {
             _get = getter;
@@ -66,7 +60,6 @@ namespace Jint.Runtime.Descriptors
 
             public override JsValue Value
             {
-                get => JsValue.Undefined;
                 set => ExceptionHelper.ThrowInvalidOperationException("making changes to throw type error property's descriptor is not allowed");
             }
         }

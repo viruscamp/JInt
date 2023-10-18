@@ -27,12 +27,6 @@ namespace Jint.Runtime.Descriptors.Specialized
         public override JsValue Get => _get ??= new GetterFunctionInstance(_engine, DoGet);
         public override JsValue Set => _set ??= new SetterFunctionInstance(_engine, DoSet);
 
-        public override JsValue Value
-        {
-            get => JsValue.Undefined;
-            set => ExceptionHelper.ThrowNotImplementedException();
-        }
-
         private JsValue DoGet(JsValue n)
         {
             return _env.TryGetBinding(_name, false, out var binding, out _)

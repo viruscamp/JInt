@@ -14,7 +14,6 @@ namespace Jint.Runtime.Descriptors
         internal PropertyFlag _flags;
         internal JsValue? _value;
 
-
         protected PropertyDescriptor() : this(PropertyFlag.None)
         {
         }
@@ -173,7 +172,14 @@ namespace Jint.Runtime.Descriptors
             }
         }
 
-        public abstract JsValue Value { get; set; }
+        // TODO change Type to JsValue? to allow null
+        // the old commits use PropertyFlag.CustomJsValue and CustomValue to avoid virtual method and force inline
+        public virtual JsValue Value
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _value!;
+            set => ExceptionHelper.ThrowNotImplementedException();
+        }
 
         internal PropertyFlag Flags
         {
@@ -403,7 +409,7 @@ namespace Jint.Runtime.Descriptors
             return true;
         }
 
-        private sealed class UndefinedPropertyDescriptor : PropertyDescriptor
+        private sealed class UndefinedPropertyDescriptor : PropertyDescriptor, INonData
         {
             public UndefinedPropertyDescriptor() : base(PropertyFlag.None)
             {
@@ -411,7 +417,6 @@ namespace Jint.Runtime.Descriptors
 
             public override JsValue Value
             {
-                get => JsValue.Undefined;
                 set => ExceptionHelper.ThrowInvalidOperationException("making changes to undefined property's descriptor is not allowed");
             }
         }

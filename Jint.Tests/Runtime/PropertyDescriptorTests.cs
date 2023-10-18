@@ -86,7 +86,7 @@ public class PropertyDescriptorTests
         // PropertyDescriptor.UndefinedPropertyDescriptor is private
         //if (checkType) Assert.IsType<PropertyDescriptor.UndefinedPropertyDescriptor>(pd);
         Assert.Equal(false, pd.IsAccessorDescriptor());
-        Assert.Equal(true, pd.IsDataDescriptor());
+        Assert.Equal(false, pd.IsDataDescriptor());
     }
 
     [Fact]
